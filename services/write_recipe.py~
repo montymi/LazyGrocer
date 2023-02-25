@@ -1,0 +1,49 @@
+import json
+import os
+from db.add_recipe import add
+
+"""
+JSON STRUCTURE
+*everything is a string*
+name
+rating
+notes
+ingredients
+  name: amount
+  name: amount
+  name: amount
+"""
+
+RECIPE_DIRECTORY = "./recipes/"
+
+# USER INPUT
+rName = input("Recipe Name: ").lower().replace('\\','')
+rating = input("* Rating (optional): ").replace('\\','') or None
+notes = input("Notes: ").replace('\\','') or None
+ingredients=[]
+print("Add ingredients and any amount metric below ('done' to finish). Default amount is 1.")
+while True:
+    iName = input("Ingredient: ").lower().replace('\\','')
+    # Remove plural forms by replacing 's' at the end of the word
+    if iName.endswith('s'):
+        iName = iName[:-1]
+    if iName == "done":
+        break    
+    ingredients.append(iName)
+
+rData = {
+        "name": rName,
+        "rating": rating,
+        "notes": notes,
+        "ingredients": ingredients
+}
+
+add(rData)
+'''
+recipe = json.dumps(rData)
+fName = rName.replace(" ", "_") + ".json"
+fPath = os.path.join(RECIPE_DIRECTORY, fName)
+with open(fPath, "w") as f:
+    recipe = json.loads(recipe)
+    json.dump(recipe, f)
+'''
