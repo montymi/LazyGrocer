@@ -75,7 +75,6 @@ class ItemSelector:
 def pick():
     DB = r"recipe.db"
     GROCERIES=[]
-    conn = None
     try:
         conn = sqlite3.connect(DB)
         cur = conn.cursor()
@@ -97,6 +96,8 @@ def pick():
 
     cur.close()
     conn.close()
+    print("")
+    [print(ingredient) for ingredient in GROCERIES]
     return GROCERIES
 
 if __name__ == "__main__":
