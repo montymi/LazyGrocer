@@ -177,6 +177,7 @@ package Controller {
         +connect(): void
         +disconnect(): bool
         +cursor(): MYSQL.Cursor()
+        +errorHandler(error_code): str
     }
 
     class ListController {
