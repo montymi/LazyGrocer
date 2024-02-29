@@ -1,0 +1,65 @@
+@startuml LazyGrozerERDdiagram
+
+header ERD Diagram
+title LazyGrocer Database Design
+footer CS3200 Final Project: Michael Montanaro 2024
+
+object Recipe {
+    title <<PK>> 
+    description
+    rating
+    meal_timing
+    favorite?
+    date_published
+}
+
+object Instruction {
+    cook_time
+    servings
+    calories
+    steps
+    url
+}
+
+object Ingredient {
+    name <<PK>>
+    inventory
+    last_added
+}
+
+object Chef {
+    username <<pk>>
+    first_name
+    last_name
+    email
+}
+
+object includes {
+    quantity
+}
+diamond DIncludes
+
+object friends {
+    start_date
+}
+diamond DFriends
+
+object Review {
+    title 
+    description 
+    rating
+    photo
+}
+
+Recipe }o- DIncludes
+DIncludes --|{ Ingredient: >
+DIncludes . includes
+Chef ||--o{ Recipe: publishes >
+Chef "chef2" - DFriends
+DFriends - "chef1" Chef
+DFriends . friends
+Review -|| Chef: writes <
+Review --|| Recipe: about >
+Instruction ||-|| Recipe: explains >
+
+@enduml
