@@ -1,0 +1,224 @@
+@startuml LazyGrozerClassDiagram
+
+header Class Diagram
+title LazyGrocer Database Design
+footer CS3200 Final Project: Michael Montanaro 2024
+
+package Model {
+    class Recipe {
+        -constructor(): void
+        +title: string
+        +description: string
+        +meal_timing: ["Breakfast", "Lunch", "Dinner"]
+        +rating: integer
+        +instruction: Instruction
+        -favorite: bool
+        -date_published
+        +isFavorite(): bool
+        +getDatePublished(): date
+        +updateDescription(): void
+    }
+
+    class Instruction {
+        -constructor(): void
+        +cook_time: integer
+        +ingredients: [{Ingredient: quantity}]
+        +servings: integer
+        +calories: integer
+        +steps: string
+        -_generateSteps(): void 
+        +updateSteps(): void
+    }
+
+    class Chef {
+        -constructor(): void
+        -username: string
+        -profile_picture: string
+        -friends: [Chef]
+        -favorites: RecipeList
+        +createRecipe(): Recipe
+        +deleteRecipe(): bool
+        +addFavorite(Recipe): bool
+        +getRecipes(): RecipeList
+        +pickIngredients(): RecipeList
+        +pickRecipes(): IngredientList
+        +getFriends(): [Chef]
+        +getFavorites(): RecipeList
+        +addFriend(username): bool
+    }
+
+    class Ingredient {
+        -constructor(): void
+        -name: string 
+        -inventory: string
+        -last_added: date
+        +updateInventory(): void
+        +getName(): string 
+        +getInventory(): string 
+        +getLastAdded(): date
+        -_updateLastAdded(): void
+    }
+
+    class Review {
+        -constructor(): void
+        -title: string 
+        -description: string 
+        -rating: integer 
+        -photo: string
+        +getTitle(): string 
+        +getDescription(): string 
+        +updateDescription(): void 
+        +getRating(): integer 
+        +getPhoto(): string
+    }
+
+    class RecipeList {
+        -constructor(): void
+        -name: string 
+        -creator: Chef
+        -recipes: [Recipe]
+        +getName: string 
+        +getCreator: Chef
+        +addRecipe(Recipe): void
+        +removeRecipe(Recipe): void
+        +filterList(string): RecipeList
+        +getRecipes(): [Recipe]
+    }
+
+    class IngredientList {
+        -constructor(): void
+        -name: string 
+        -creator: Chef
+        -ingredients: [Ingredient]
+        +getName: string 
+        +getCreator: Chef
+        +getIngredients(): [Ingredient]
+        +addIngredient(Ingredient): void
+        +removeIngredient(Ingredient): void
+        +hasIngredient(Ingredient): bool
+    }
+}
+
+package View {
+    class RecipeView {
+        +showTitle(): string 
+        +showDescription(): string 
+        +showMealTiming(): string 
+        +showRating(): integer 
+        +showInstruction(): Instruction
+        +showReviews(): ListRecipeReviewView
+        +showIngredients(): ListIngredientView 
+        +showIngredient(string): IngredientView
+        +getInput(): string 
+        +updateRecipe(): void
+    }
+    class ChefView {
+        +showUsername(): string
+        +showFriends(): [Chef.username]
+        +showFavorites(): ListRecipeView
+        +showRecipeListView(): ListRecipeView
+        +showIngredientListView(): ListIngredientView
+        +showProfilePicture(): Chef.profile
+    }
+    class IngredientView {
+        -ingredients: IngredientList
+        +showName(): string 
+        +showInventory(): string 
+        +showLastAdded(): string
+        +getInventoryInput(): string
+        +updateInventory(string): void
+    }
+    class ListRecipeView {
+        -selected: RecipeList
+        +showRecipes(): [Recipe.title]
+        +showRecipe(string): RecipeView
+        +showRatings(): [Recipe.rating]
+        +showFavorites(): [Recipe.title]
+        +addRecipe(Recipe): void 
+        +removeRecipe(Recipe): void
+        +selectRecipe(Recipe): void 
+        +showSelectedIngredients(): ListIngredientView
+        +sortAlphabetical(): void 
+        +sortMealTiming(): void
+    }
+    class ListIngredientView {
+        -selected: IngredientList
+        +showIngredients(): [Ingredient.name]
+        +showIngredient(string): IngredientView
+        +showInventory(): [Ingredient.inventory]
+        +addIngredient(Ingredient): void
+        +selectIngredient(Ingredient): void
+        +showSelectedRecipes(): ListRecipeView
+        +removeIngredient(Ingredient): void
+    }
+    class ListRecipeReviewView {
+        +getRecipeTitle(): string 
+        +getReviews(): [(Review.title, Review.rating)]
+        +getPhotos(): [null, Review.photo]
+        +getInput(): string 
+        +addReview(string): dict
+        +removeReview(string): void
+    }
+
+    class LoginView {
+        -currentUser: Chef | null
+        +getUsername(): string
+        +showChefView(): ChefView
+        +_welcomeUser(): void
+        +_createUser(): Chef
+    }
+}
+
+package Controller {
+    class DataController {
+        -constructor(): void
+        -database: string
+        -connection: MYSQL.Connection()
+        +connect(): void
+        +disconnect(): bool
+        +cursor(): MYSQL.Cursor()
+        +errorHandler(error_code): str
+    }
+
+    class ListController {
+        -constructor(): void 
+        -list: RecipeList | IngredientList 
+        -createElement(dict): void
+        -replaceElement(dict): void
+        -deleteElement(string): void
+        -updateElement(dict): void
+    }
+}
+
+' MVC ARCHITECTURE 
+Model - Controller: utilizes <
+Controller -- View: < talks with
+
+' Database
+package MYSQL <<Database>> {
+
+}
+DataController ||-|| MYSQL: CRUD on >
+
+' INTRA-MODEL
+Recipe }o--|{ Ingredient: includes >
+Chef ||--o{ Recipe: publishes >
+Chef - Chef: follows
+Review -|| Chef: writes <
+Review }o- Recipe: about >
+Instruction ||-|| Recipe: explains >
+Recipe }|-o{ RecipeList: makes up >
+Ingredient }|-o{ IngredientList: makes up >
+
+' INTRA-VIEW
+LoginView ||-|{ ChefView: >
+ChefView ||-|| ListRecipeView: >
+ChefView ||--|| ListIngredientView: >
+ListIngredientView ||--|{ IngredientView: > 
+IngredientView - RecipeView: <
+ListIngredientView - RecipeView: <
+ListRecipeView ||--|{ RecipeView: >
+RecipeView ||--|| ListRecipeReviewView: >
+ListRecipeView - ListIngredientView: >
+ListIngredientView - ListRecipeView: >
+@enduml
