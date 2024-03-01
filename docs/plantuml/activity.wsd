@@ -17,7 +17,7 @@ if (using UI) then (yes)
     if (logged in) then (yes)
     else (no)
         :Show local user list;
-        if (user selected) then (yes)
+        if (selects profile) then (yes)
         else (no)
             :App prompts for username;
             :App creates user;
@@ -29,27 +29,27 @@ else (no)
   stop
 endif
 :App shows user profile;
-if (User selects profile) then (yes)
+if (selects Chef) then (yes)
     :User can update profile settings;
 endif
-if (User selects "Recipes") then (yes)
+if (selects Recipes) then (yes)
     :App displays all recipes;
-    if (User selects "Add Recipe") then (yes)
+    if (selects "Add Recipe") then (yes)
         :App allows user to add recipe;
         :App shows recipe view;
         :loop back to display all recipes;
     endif
-    if (User opens a recipe) then (yes)
+    if (opens Recipe) then (yes)
         :App shows recipe view;
         :User can review recipe
         :User can edit recipe;
         :User can delete recipe;
     endif
-    if (User selects a recipe) then (yes)
-        if (User selects "Create Ingredient List") then (yes)
+    if (selects Recipe) then (yes)
+        if (selects "Create Ingredient List") then (yes)
             :App creates ingredient list;
             :App displays ingredient list;
-            if (User names ingredient list) then (yes)
+            if (names list) then (yes)
                 :App updates list name;
             else (no)
                 :App auto-names list;
@@ -57,22 +57,22 @@ if (User selects "Recipes") then (yes)
         endif
     endif
 endif
-if (User selects "Ingredients") then (yes)
+if (selects Ingredients) then (yes)
     :App displays all ingredients;
-    if (User selects "Merge Ingredients") then (yes)
+    if (selects "Merge Ingredients") then (yes)
         :App allows user to combine duplicate ingredients;
         :App updates ingredient list view;
     endif
-    if (User opens an ingredient) then (yes)
+    if (opens Ingredient) then (yes)
             :App shows ingredient view;
             :User can edit inventory amount;
             :User can rename the ingredient;
     endif
-    if (User selects an ingredient) then (yes)
-        if (User selects "Create Recipe List") then (yes)
+    if (selects Ingredient) then (yes)
+        if (selects "Create Recipe List") then (yes)
             :App creates recipe list;
             :App displays recipe list;
-            if (User names recipe list) then (yes)
+            if (names list) then (yes)
                 :App updates list name;
             else (no)
                 :App auto-names list;
@@ -80,10 +80,10 @@ if (User selects "Ingredients") then (yes)
         endif
     endif
 endif
-if (User selects Recipe Lists) then (yes)
+if (selects Recipe Lists) then (yes)
     :App shows saved recipe lists;
-    if (User opens list) then (yes)
-        if (User opens a recipe) then (yes)
+    if (selects List) then (yes)
+        if (opens Recipe) then (yes)
             :App shows recipe view;
             :User can review recipe
             :User can edit recipe;
@@ -94,10 +94,10 @@ if (User selects Recipe Lists) then (yes)
         endif
     endif
 endif
-if (User Selects Ingredients List) then (yes)
+if (selects Ingredients List) then (yes)
     :App shows saved ingredient lists;
-    if (User opens list) then (yes)
-        if (User opens an ingredient) then (yes)
+    if (opens List) then (yes)
+        if (opens Ingredient) then (yes)
             :App shows ingredient view;
             :User can edit inventory amount;
             :User can rename the ingredient;
@@ -111,13 +111,28 @@ if (User Selects Ingredients List) then (yes)
 endif
 endif
 endif
-if (User saves) then (yes)
+if (adds friend) then (yes)
+    :New account added to user friends list;
+endif
+if (selects Friends) then (yes)
+    :App shows Friends list;
+    if (selects Friend) then (yes)
+        :App displays Friend profile;
+        :User may unfollow friend;
+        :User may create recipe list from friend data;
+        :User may create ingredient list from friend data;
+    endif
+endif
+if (saves changes) then (yes)
     :App uploads changes to database;
     :App confirms successful save;
 else (no)
     :App does not save changes to database;
 endif
-:App displays user profile;
-:User exits;
-end
+if (exits) then (yes)
+    end
+else (no)
+    :App continues displaying user profile;
+    stop
+endif 
 @enduml
