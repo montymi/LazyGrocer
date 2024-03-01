@@ -8,8 +8,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-# TODO: add an export to notes section
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
