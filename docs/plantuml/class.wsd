@@ -30,23 +30,6 @@ package Model {
         +updateSteps(): void
     }
 
-    class Chef {
-        -constructor(): void
-        -username: string
-        -profile_picture: string
-        -friends: [Chef]
-        -favorites: RecipeList
-        +createRecipe(): Recipe
-        +deleteRecipe(): bool
-        +addFavorite(Recipe): bool
-        +getRecipes(): RecipeList
-        +pickIngredients(): RecipeList
-        +pickRecipes(): IngredientList
-        +getFriends(): [Chef]
-        +getFavorites(): RecipeList
-        +addFriend(username): bool
-    }
-
     class Ingredient {
         -constructor(): void
         -name: string 
@@ -57,19 +40,6 @@ package Model {
         +getInventory(): string 
         +getLastAdded(): date
         -_updateLastAdded(): void
-    }
-
-    class Review {
-        -constructor(): void
-        -title: string 
-        -description: string 
-        -rating: integer 
-        -photo: string
-        +getTitle(): string 
-        +getDescription(): string 
-        +updateDescription(): void 
-        +getRating(): integer 
-        +getPhoto(): string
     }
 
     class RecipeList {
@@ -106,20 +76,20 @@ package View {
         +showMealTiming(): string 
         +showRating(): integer 
         +showInstruction(): Instruction
-        +showReviews(): ListRecipeReviewView
         +showIngredients(): ListIngredientView 
-        +showIngredient(string): IngredientView
-        +getInput(): string 
         +updateRecipe(): void
     }
+
     class ChefView {
         +showUsername(): string
-        +showFriends(): [Chef.username]
+        +showRecipes(): ListRecipeView
+        +showIngredients(): ListIngredientView
         +showFavorites(): ListRecipeView
         +showRecipeListView(): ListRecipeView
         +showIngredientListView(): ListIngredientView
         +showProfilePicture(): Chef.profile
     }
+
     class IngredientView {
         -ingredients: IngredientList
         +showName(): string 
@@ -128,10 +98,10 @@ package View {
         +getInventoryInput(): string
         +updateInventory(string): void
     }
+
     class ListRecipeView {
         -selected: RecipeList
         +showRecipes(): [Recipe.title]
-        +showRecipe(string): RecipeView
         +showRatings(): [Recipe.rating]
         +showFavorites(): [Recipe.title]
         +addRecipe(Recipe): void 
@@ -141,6 +111,7 @@ package View {
         +sortAlphabetical(): void 
         +sortMealTiming(): void
     }
+
     class ListIngredientView {
         -selected: IngredientList
         +showIngredients(): [Ingredient.name]
@@ -150,14 +121,6 @@ package View {
         +selectIngredient(Ingredient): void
         +showSelectedRecipes(): ListRecipeView
         +removeIngredient(Ingredient): void
-    }
-    class ListRecipeReviewView {
-        +getRecipeTitle(): string 
-        +getReviews(): [(Review.title, Review.rating)]
-        +getPhotos(): [null, Review.photo]
-        +getInput(): string 
-        +addReview(string): dict
-        +removeReview(string): void
     }
 
     class LoginView {
@@ -202,10 +165,6 @@ DataController ||-|| MYSQL: CRUD on >
 
 ' INTRA-MODEL
 Recipe }o--|{ Ingredient: includes >
-Chef ||--o{ Recipe: publishes >
-Chef - Chef: follows
-Review -|| Chef: writes <
-Review }o- Recipe: about >
 Instruction ||-|| Recipe: explains >
 Recipe }|-o{ RecipeList: makes up >
 Ingredient }|-o{ IngredientList: makes up >
@@ -218,7 +177,6 @@ ListIngredientView ||--|{ IngredientView: >
 IngredientView - RecipeView: <
 ListIngredientView - RecipeView: <
 ListRecipeView ||--|{ RecipeView: >
-RecipeView ||--|| ListRecipeReviewView: >
 ListRecipeView - ListIngredientView: >
 ListIngredientView - ListRecipeView: >
 @enduml

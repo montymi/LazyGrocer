@@ -13,6 +13,11 @@ entity Recipe {
     date_published
 }
 
+entity RecipeList {
+    name <<PK>>
+    description
+}
+
 entity Instruction {
     cook_time
     servings
@@ -27,6 +32,11 @@ entity Ingredient {
     last_added
 }
 
+entity IngredientList {
+    name <<PK>>
+    description
+}
+
 entity Chef {
     username <<pk>>
     first_name
@@ -39,27 +49,12 @@ object includes {
 }
 diamond DIncludes
 
-object friends {
-    start_date
-}
-diamond DFriends
-
-entity Review {
-    title 
-    description 
-    rating
-    photo
-}
-
-Recipe }o- DIncludes
+Recipe }|-- DIncludes
 DIncludes --|{ Ingredient: >
 DIncludes . includes
+Recipe }|-o{ RecipeList: includes <
+Ingredient }|-o{ IngredientList: for <
 Chef ||--o{ Recipe: publishes >
-Chef "chef2" - DFriends
-DFriends - "chef1" Chef
-DFriends . friends
-Review -|| Chef: writes <
-Review --|| Recipe: about >
 Instruction ||-|| Recipe: explains >
 
 @enduml

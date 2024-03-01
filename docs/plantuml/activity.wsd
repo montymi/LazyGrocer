@@ -29,7 +29,7 @@ else (no)
   stop
 endif
 :App shows user profile;
-if (selects Chef) then (yes)
+if (selects edit Profile) then (yes)
     :User can update profile settings;
 endif
 if (selects Recipes) then (yes)
@@ -37,7 +37,6 @@ if (selects Recipes) then (yes)
     if (selects "Add Recipe") then (yes)
         :App allows user to add recipe;
         :App shows recipe view;
-        :loop back to display all recipes;
     endif
     if (opens Recipe) then (yes)
         :App shows recipe view;
@@ -83,6 +82,7 @@ endif
 if (selects Recipe Lists) then (yes)
     :App shows saved recipe lists;
     if (selects List) then (yes)
+        :App shows recipe list view;
         if (opens Recipe) then (yes)
             :App shows recipe view;
             :User can review recipe
@@ -90,13 +90,14 @@ if (selects Recipe Lists) then (yes)
             :User can delete recipe;
         else (no)
             :User can check off recipes;
-            :User can rename lis
+            :User can rename list;
         endif
     endif
 endif
 if (selects Ingredients List) then (yes)
     :App shows saved ingredient lists;
     if (opens List) then (yes)
+        :App shows ingredient list view;
         if (opens Ingredient) then (yes)
             :App shows ingredient view;
             :User can edit inventory amount;
@@ -107,20 +108,6 @@ if (selects Ingredients List) then (yes)
             :User can add or remove ingredients;
             :User prompted for quantity added;
         endif
-    endif
-endif
-endif
-endif
-if (adds friend) then (yes)
-    :New account added to user friends list;
-endif
-if (selects Friends) then (yes)
-    :App shows Friends list;
-    if (selects Friend) then (yes)
-        :App displays Friend profile;
-        :User may unfollow friend;
-        :User may create recipe list from friend data;
-        :User may create ingredient list from friend data;
     endif
 endif
 if (saves changes) then (yes)
