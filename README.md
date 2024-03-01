@@ -74,8 +74,29 @@ lg url *link*        // create recipe from valid link
 
 <!-- STRUCTURE -->
 ## Structure
-
-
+```
+${LAZYGROCER_ROOT}
+├── lazyGrocer.py
+├── docs
+|   ├── plantum1
+|   |   ├── class.wsd
+|   |   └── erd.wsd
+│   ├── diagrams
+|   |   ├── class/LazyGrocerClassDiagram.png
+|   |   └── erd/LazyGrocerERDdiagram.png
+├── services
+|   ├── TODO
+|   └── TODO
+├── artifcats
+|   ├── data
+|   |   └── test.db
+|   ├── exports
+|   |    └── example.json
+├── README.md
+├── __init__.py
+├── .gitignore
+└── LICENSE.txt
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
