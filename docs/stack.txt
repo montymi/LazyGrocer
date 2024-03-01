@@ -1,0 +1,10 @@
+Tech Stack for LazyGrocer
+
+Language: python
+Libraries:
+    - Tkinter
+    - mysql-connector-python
+    - Beautiful Soup
+    - Requests
+Database: mysql 
+OS: any

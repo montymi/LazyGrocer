@@ -13,24 +13,12 @@ footer CS3200 Final Project: Michael Montanaro 2024
 start
 :User interacts with LazyGrocer;
 if (using UI) then (yes)
-    :App opens on device;
-    if (logged in) then (yes)
-    else (no)
-        :Show local user list;
-        if (selects profile) then (yes)
-        else (no)
-            :App prompts for username;
-            :App creates user;
-        endif
+    :App shows user profile;
+    if (selects edit Profile) then (yes)
+        :User can update profile settings;
     endif
 else (no)
   :User interacts with CLI tools;
-  :User can use any of the following options:\n```bash\nlg write [ *file_name* ] # optional arg\nlg url *link_here*\nlg recipe [ *recipe_name* ] # optional arg, default returns full list\nlg recipes [ *recipe_list_name* ] # optional arg, default returns all recipe lists\nlg instruction *recipe_name*\nlg ingredients [ *ingredient_list_name* ] #optional arg, default returns all ingredient lists\nlg ingredient [ *ingredient_name* ] # optional arg, default returns all ingredients\nlg user [ *user_name* ] # optional arg, default will get current user\n```;
-  stop
-endif
-:App shows user profile;
-if (selects edit Profile) then (yes)
-    :User can update profile settings;
 endif
 if (selects Recipes) then (yes)
     :App displays all recipes;
