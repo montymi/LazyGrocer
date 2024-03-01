@@ -4,7 +4,7 @@ header ERD Diagram
 title LazyGrocer Database Design
 footer CS3200 Final Project: Michael Montanaro 2024
 
-entity Recipe {
+object Recipe {
     title <<PK>> 
     description
     rating
@@ -13,12 +13,12 @@ entity Recipe {
     date_published
 }
 
-entity RecipeList {
+object RecipeList {
     name <<PK>>
     description
 }
 
-entity Instruction {
+object Instruction {
     cook_time
     servings
     calories
@@ -26,18 +26,18 @@ entity Instruction {
     url
 }
 
-entity Ingredient {
+object Ingredient {
     name <<PK>>
     inventory
     last_added
 }
 
-entity IngredientList {
+object IngredientList {
     name <<PK>>
     description
 }
 
-entity Chef {
+object Chef {
     username <<pk>>
     first_name
     last_name
