@@ -16,7 +16,7 @@
   <p align="center">
     Created for: CS3200 Database Design Final Project  
     <br />
-    By: Michael Montanaro, Chandler Cree, Sanay Doshi
+    By: Michael Montanaro, Colby Hegarty, Sanay Doshi
   </p>
 </div>
 
