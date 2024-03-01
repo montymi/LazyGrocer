@@ -52,7 +52,7 @@ diamond DIncludes
 Recipe }|-- DIncludes
 DIncludes --|{ Ingredient: >
 DIncludes . includes
-Recipe }|-o{ RecipeList: includes <
+Recipe }|-o{ RecipeList: contains <
 Ingredient }|-o{ IngredientList: for <
 Chef ||--o{ Recipe: publishes >
 Instruction ||-|| Recipe: explains >
