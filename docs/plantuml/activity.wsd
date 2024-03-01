@@ -26,11 +26,7 @@ if (using UI) then (yes)
     endif
 else (no)
   :User interacts with CLI tools;
-  :User selects any of the following options:;
-  :write;
-  :url;
-  :recipe;
-  :instruction;
+  :User can use any of the following options:\n```bash\nlg write [ *file_name* ] # optional arg\nlg url *link_here*\nlg recipe [ *recipe_name* ] # optional arg, default returns full list\nlg recipes [ *recipe_list_name* ] # optional arg, default returns all recipe lists\nlg instruction *recipe_name*\nlg ingredients [ *ingredient_list_name* ] #optional arg, default returns all ingredient lists\nlg ingredient [ *ingredient_name* ] # optional arg, default returns all ingredients\nlg user [ *user_name* ] # optional arg, default will get current user\n```;
   stop
 endif
 if (User selects "Recipes") then (yes)
