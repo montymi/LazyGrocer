@@ -15,13 +15,12 @@ start
 if (using UI) then (yes)
     :App opens on device;
     if (logged in) then (yes)
-        :App shows user profile;
     else (no)
         :Show local user list;
         if (user selected) then (yes)
-        :App shows user profile;
         else (no)
-            stop
+            :App prompts for username;
+            :App creates user;
         endif
     endif
 else (no)
@@ -29,109 +28,96 @@ else (no)
   :User can use any of the following options:\n```bash\nlg write [ *file_name* ] # optional arg\nlg url *link_here*\nlg recipe [ *recipe_name* ] # optional arg, default returns full list\nlg recipes [ *recipe_list_name* ] # optional arg, default returns all recipe lists\nlg instruction *recipe_name*\nlg ingredients [ *ingredient_list_name* ] #optional arg, default returns all ingredient lists\nlg ingredient [ *ingredient_name* ] # optional arg, default returns all ingredients\nlg user [ *user_name* ] # optional arg, default will get current user\n```;
   stop
 endif
+:App shows user profile;
+if (User selects profile) then (yes)
+    :User can update profile settings;
+endif
 if (User selects "Recipes") then (yes)
-        :App displays all recipes;
-        if (User selects "Add Recipe") then (yes)
-            :App allows user to add recipe;
-            :App shows recipe view;
-        else (no)
-            :loop back to display all recipes;
-            if (User opens a recipe) then (yes)
-                :App shows recipe view;
-                :User can review recipe
-                :User can edit recipe;
-                :User can delete recipe;
+    :App displays all recipes;
+    if (User selects "Add Recipe") then (yes)
+        :App allows user to add recipe;
+        :App shows recipe view;
+        :loop back to display all recipes;
+    endif
+    if (User opens a recipe) then (yes)
+        :App shows recipe view;
+        :User can review recipe
+        :User can edit recipe;
+        :User can delete recipe;
+    endif
+    if (User selects a recipe) then (yes)
+        if (User selects "Create Ingredient List") then (yes)
+            :App creates ingredient list;
+            :App displays ingredient list;
+            if (User names ingredient list) then (yes)
+                :App updates list name;
             else (no)
-                if (User selects a recipe) then (yes)
-                    if (User selects "Create Ingredient List") then (yes)
-                        :App creates ingredient list;
-                        :App displays ingredient list;
-                        if (User names ingredient list) then (yes)
-                            :App updates list name;
-                        else (no)
-                            :App auto-names list;
-                        endif
-                    else (no)
-                        stop
-                    endif
-                else (no)
-                    stop
-                endif
+                :App auto-names list;
             endif
         endif
-else (no)
-    if (User selects "Ingredients") then (yes)
-        :App displays all ingredients;
-        if (User selects "Merge Ingredients") then (yes)
-            :App allows user to combine duplicate ingredients;
-            :App updates ingredient list view;
-        else (no)
-            :loop back to display all ingredients;
-            stop
+    endif
+endif
+if (User selects "Ingredients") then (yes)
+    :App displays all ingredients;
+    if (User selects "Merge Ingredients") then (yes)
+        :App allows user to combine duplicate ingredients;
+        :App updates ingredient list view;
+    endif
+    if (User opens an ingredient) then (yes)
+            :App shows ingredient view;
+            :User can edit inventory amount;
+            :User can rename the ingredient;
+    endif
+    if (User selects an ingredient) then (yes)
+        if (User selects "Create Recipe List") then (yes)
+            :App creates recipe list;
+            :App displays recipe list;
+            if (User names recipe list) then (yes)
+                :App updates list name;
+            else (no)
+                :App auto-names list;
+            endif
         endif
+    endif
+endif
+if (User selects Recipe Lists) then (yes)
+    :App shows saved recipe lists;
+    if (User opens list) then (yes)
+        if (User opens a recipe) then (yes)
+            :App shows recipe view;
+            :User can review recipe
+            :User can edit recipe;
+            :User can delete recipe;
+        else (no)
+            :User can check off recipes;
+            :User can rename lis
+        endif
+    endif
+endif
+if (User Selects Ingredients List) then (yes)
+    :App shows saved ingredient lists;
+    if (User opens list) then (yes)
         if (User opens an ingredient) then (yes)
             :App shows ingredient view;
             :User can edit inventory amount;
             :User can rename the ingredient;
         else (no)
-            if (User selects an ingredient) then (yes)
-                if (User selects "Create Recipe List") then (yes)
-                    :App creates recipe list;
-                    :App displays recipe list;
-                    if (User names recipe list) then (yes)
-                        :App updates list name;
-                    else (no)
-                        :App auto-names list;
-                    endif
-                else (no)
-                    stop
-                endif
-            else (no)
-                stop
-            endif
-        endif
-    else (no)
-        if (User selects "Recipe Lists") then (yes)
-            :App shows saved recipe lists;
-            if (User opens a recipe) then (yes)
-                :App shows recipe view;
-                :User can review recipe
-                :User can edit recipe;
-                :User can delete recipe;
-            else (no)
-                :User can check off recipes;
-                :User can rename list;
-            endif
-        else (no)
-            if (User Selects "Ingredients List") then (yes)
-                :App shows saved ingredient lists;
-                if (User opens list) then (yes)
-                    if (User opens an ingredient) then (yes)
-                        :App shows ingredient view;
-                        :User can edit inventory amount;
-                        :User can rename the ingredient;
-                    else (no)
-                        :User can rename list;
-                        :User can check off ingredients;
-                        :User can add or remove ingredients;
-                        :User prompted for quantity added;
-                    endif
-                else (no)
-                    :User can return to user profile;
-                    stop 
-                endif
-            else (no)
-                :App stays on user profile;
-                stop
-            endif
+            :User can rename list;
+            :User can check off ingredients;
+            :User can add or remove ingredients;
+            :User prompted for quantity added;
         endif
     endif
 endif
+endif
+endif
 if (User saves) then (yes)
     :App uploads changes to database;
-    stop
+    :App confirms successful save;
 else (no)
     :App does not save changes to database;
-    stop
 endif
+:App displays user profile;
+:User exits;
+end
 @enduml
