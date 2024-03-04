@@ -2,8 +2,6 @@ import importlib.resources as resources
 import logging
 import sqlite3
 
-logging.basicConfig(level=logging.DEBUG)
-
 from model.enums.scripts import InsertScripts, SelectScripts
 
 class DataController:
@@ -26,22 +24,22 @@ class DataController:
             logging.error("Failed to connect to the database: %s", e)
 
     def disconnect(self):
-        if not self.connection: logging.info("No active connection")
+        if not self.connection: logging.debug("No active connection")
         else:
             try:
                 self.connection.close() 
-                logging.info("Disconnected from database")
+                logging.debug("Disconnected from database")
             except sqlite3.Error as e:
                 logging.error("Failed to disconnect from the database: %s", e)
 
     def execute(self, query: InsertScripts, params=[]):
         if not self.connection: 
-            logging.info("No active connection")
+            logging.debug("No active connection")
         elif query.params != len(params):
             logging.debug("Incorrect number of parameters given")
         else:
             try:
-                if not params: self.cursor.execute(query) 
+                if not params: self.cursor.execute(query.script) 
                 else: self.cursor.execute(query.script, params)
                 self.connection.commit()
                 logging.debug("Query executed successfully: %s", query.script)
@@ -52,7 +50,7 @@ class DataController:
 
     def fetch(self, query: SelectScripts, params=None):
         if not self.connection: 
-            logging.info("No active connection")
+            logging.debug("No active connection")
         else: 
             try:
                 if params: self.cursor.execute(query.script, params)

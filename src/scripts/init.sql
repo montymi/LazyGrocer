@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS Instruction (
 
 CREATE TABLE IF NOT EXISTS Ingredient (
     name VARCHAR(50) PRIMARY KEY,
-    inventory INTEGER,
+    inventory VARCHAR(50),
     last_added DATE
 );
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS IngredientList (
 CREATE TABLE IF NOT EXISTS RincludesI (
     recipe_title VARCHAR(50),
     ingredient_name VARCHAR(50),
-    quantity INTEGER,
+    quantity VARCHAR(50),
     FOREIGN KEY (recipe_title) 
         REFERENCES Recipe(title)
         ON UPDATE CASCADE

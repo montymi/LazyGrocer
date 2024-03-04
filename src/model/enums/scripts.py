@@ -16,19 +16,19 @@ class InsertScripts(Scripts):
 
     # relationships
     RINCLUDESI = ( "INSERT INTO RincludesI (recipe_title, ingredient_name, quantity) VALUES (?, ?, ?);", 3 )
-    RLCONTAINSR = ( "INSERT INTO RLcontainsR (recipe_title, recipe_list_name) VALUES (?, ?);", 2 )
+    RINRL = ( "INSERT INTO RinRL (recipe_title, recipe_list_name) VALUES (?, ?);", 2 )
     ILFORI = ( "INSERT INTO ILforI (ingredient_list_name, ingredient_name) VALUES (?, ?);", 2 )
 
 class SelectScripts(Scripts):
 
     # entities
-    RECIPES = ( "SELECT * FROM Recipe;", 0 )
-    INGREDIENTS = ( "SELECT * FROM Ingredient;", 0 )
-    INSTRUCTIONS = ( "SELECT * FROM Instruction;", 0 )
-    RECIPELISTS = ( "SELECT * FROM RecipeList;", 0 )
-    INGREDIENTLISTS = ( "SELECT * FROM IngredientList;", 0 )
+    RECIPE = ( "SELECT * FROM Recipe;", 0 )
+    INGREDIENT = ( "SELECT * FROM Ingredient;", 0 )
+    INSTRUCTION = ( "SELECT * FROM Instruction;", 0 )
+    RECIPELIST = ( "SELECT * FROM RecipeList;", 0 )
+    INGREDIENTLIST = ( "SELECT * FROM IngredientList;", 0 )
 
     # relationships
     RINCLUDESI = ( "SELECT * FROM RincludesI;", 0 )
-    RLCONTAINSR = ( "SELECT * FROM RLcontainsR;", 0 )
+    RINRL = ( "SELECT * FROM RinRL;", 0 )
     ILFORI = ( "SELECT * FROM ILforI;", 0 )
