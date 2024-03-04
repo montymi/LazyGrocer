@@ -1,6 +1,5 @@
 import unittest
 import logging
-import os
 
 from controller.dataController import DataController
 from model.enums.scripts import InsertScripts
@@ -8,8 +7,7 @@ from model.enums.scripts import InsertScripts
 class TestDataInserts(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        os.remove("../artifacts/test.db")
-        self.dc = DataController(r"../artifacts/test.db")
+        self.dc = DataController()
         self.dc.connect()
         self.ingredients = [
             ('Spaghetti', "Half a package", '2024-03-03'),

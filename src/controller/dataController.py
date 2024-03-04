@@ -5,7 +5,7 @@ import sqlite3
 from model.enums.scripts import InsertScripts, SelectScripts
 
 class DataController:
-    def __init__(self, db=r"../artifacts/recipe.db"):
+    def __init__(self, db=r"./artifacts/recipe.db"):
         self.db = db
         self.connection = None 
         self.cursor = None

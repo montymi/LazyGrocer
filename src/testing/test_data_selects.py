@@ -7,7 +7,7 @@ from model.enums.scripts import SelectScripts
 class TestDataSelects(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        self.dc = DataController(r"../artifacts/test.db")
+        self.dc = DataController()
         self.dc.connect()
 
     def test_select_recipe(self):
