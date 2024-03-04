@@ -37,13 +37,6 @@ object IngredientList {
     description
 }
 
-object Chef {
-    username <<pk>>
-    first_name
-    last_name
-    email
-}
-
 object includes {
     quantity
 }
@@ -54,7 +47,6 @@ DIncludes --|{ Ingredient: >
 DIncludes . includes
 Recipe }|-o{ RecipeList: contains <
 Ingredient }|-o{ IngredientList: for <
-Chef ||--o{ Recipe: publishes >
 Instruction ||-|| Recipe: explains >
 
 @enduml
