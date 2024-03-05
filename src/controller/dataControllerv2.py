@@ -17,49 +17,54 @@ class DataController2:
     
     def _init_database_(self):
         try:
-            self.connection = connect(
-                host=self.host,
-                user=self.user,
-                password=self.password
-            )
-            if self.connection.is_connected():
-                self.cursor = self.connection.cursor()
-                if self.database == self.TESTDB:
-                    self.read("test_init")
-                else: self.read()
-                self.disconnect()
+            if not self.is_connected():
+                self.connection = connect(
+                    host=self.host,
+                    user=self.user,
+                    password=self.password
+                )
+                if self.is_connected():
+                    self.cursor = self.connection.cursor()
+                    if self.database == self.TESTDB:
+                        self.read("test_init")
+                    else: self.read()
+                    self.disconnect()
         except Error as e:
             print("Error creating database:", e)
 
     def connect(self):
         try:
-            self.connection = connect(
-                host=self.host,
-                user=self.user,
-                password=self.password,
-                database=self.database
-            )
-            if self.connection.is_connected():
-                logging.debug("Connected to MySQL database")
-                self.cursor = self.connection.cursor()
+            if not self.is_connected():
+                self.connection = connect(
+                    host=self.host,
+                    user=self.user,
+                    password=self.password,
+                    database=self.database
+                )
+                if self.is_connected():
+                    logging.debug("Connected to MySQL database")
+                    self.cursor = self.connection.cursor()
         except Error as e:
             logging.error("Failed to connect to the database: %s", e)
 
+    def is_connected(self):
+        return self.connection is not None and self.connection.is_connected()
+
     def disconnect(self):
-        if not self.connection:
-            logging.debug("No active connection")
-        else:
-            try:
+        try:
+            if not self.is_connected():
+                logging.debug("No active connection")
+            else:    
                 self.cursor.close()
                 self.connection.close() 
                 self.cursor = None
                 self.connection = None
                 logging.debug("Disconnected from MySQL database")
-            except Error as e:
-                logging.error("Failed to disconnect from the database: %s", e)
+        except Error as e:
+            logging.error("Failed to disconnect from the database: %s", e)
 
     def execute(self, query: InsertScripts, params=[]):
-        if not self.connection: 
+        if not self.is_connected(): 
             logging.debug("No active connection")
         elif query.params != len(params):
             logging.debug("Incorrect number of parameters given")
@@ -77,7 +82,7 @@ class DataController2:
         return -1
 
     def fetch(self, query: SelectScripts, params=[]):
-        if not self.connection: 
+        if not self.is_connected(): 
             logging.debug("No active connection")
         elif query.params != len(params):
             logging.debug("Incorrect number of parameters given")
@@ -93,7 +98,7 @@ class DataController2:
         return []
         
     def read(self, script="init"):
-        if not self.connection:
+        if not self.is_connected():
             logging.info("No active connection")
         else:
             if not script.endswith('.sql'):
