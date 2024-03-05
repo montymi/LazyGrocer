@@ -12,15 +12,24 @@ class DataController2:
         self.database = database
         self.connection = None 
         self.cursor  = None
+        self.TESTDB = 'testgrocer'
         self._init_database_()
-
+    
     def _init_database_(self):
-        self._create_db()
-        self.connect() 
-        if self.database == 'testgrocer':
-            self.read("test_init")
-        else: self.read()
-        self.disconnect()
+        try:
+            self.connection = connect(
+                host=self.host,
+                user=self.user,
+                password=self.password
+            )
+            if self.connection.is_connected():
+                self.cursor = self.connection.cursor()
+                if self.database == self.TESTDB:
+                    self.read("test_init")
+                else: self.read()
+                self.disconnect()
+        except Error as e:
+            print("Error creating database:", e)
 
     def connect(self):
         try:
@@ -95,19 +104,3 @@ class DataController2:
                 logging.debug("SQL script '%s' executed successfully", script)
             except Error as e:
                 logging.error("Error executing SQL script '%s': %s", script, e)
-
-    def _create_db(self):
-        try:
-            connection = connect(
-                host=self.host,
-                user=self.user,
-                password=self.password
-            )
-            if connection.is_connected():
-                cursor = connection.cursor()
-                cursor.execute("CREATE DATABASE IF NOT EXISTS {}".format(self.database))
-                logging.debug(f"Database {self.database} created successfully")
-                cursor.close()
-                connection.close()
-        except Error as e:
-            print("Error creating database:", e)
