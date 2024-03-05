@@ -63,7 +63,7 @@ class DataController2:
         except Error as e:
             logging.error("Failed to disconnect from the database: %s", e)
 
-    def execute(self, query: InsertScripts, params=[]):
+    def execute(self, query: InsertScripts, params: tuple=()):
         if not self.is_connected(): 
             logging.debug("No active connection")
         elif query.params != len(params):
@@ -81,7 +81,7 @@ class DataController2:
                 logging.error("Error executing query: %s", e)
         return -1
 
-    def fetch(self, query: SelectScripts, params=[]):
+    def fetch(self, query: SelectScripts, params: tuple=()):
         if not self.is_connected(): 
             logging.debug("No active connection")
         elif query.params != len(params):

@@ -1,4 +1,5 @@
 -- database
+DROP DATABASE IF EXISTS testgrocer;
 CREATE DATABASE IF NOT EXISTS testgrocer;
 USE testgrocer;
 
