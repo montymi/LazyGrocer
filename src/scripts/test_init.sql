@@ -1,6 +1,6 @@
 -- database
-CREATE DATABASE IF NOT EXISTS lazygrocer;
-USE lazygrocer;
+CREATE DATABASE IF NOT EXISTS testgrocer;
+USE testgrocer;
 
 -- tables
 CREATE TABLE IF NOT EXISTS Recipe (

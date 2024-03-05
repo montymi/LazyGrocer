@@ -1,22 +1,25 @@
-from mysql.connector import connect
+from mysql.connector import connect, Error
 import getpass
 import logging
 
 from model.enums.scripts import InsertScripts, SelectScripts
 
 class DataController2:
-    def __init__(self, host='localhost', user='root', password='', database='recipes'):
+    def __init__(self, database='lazygrocer', host='localhost', user='root'):
         self.host = host
         self.user = user
         self.password = getpass.getpass("Enter password: ")
         self.database = database
         self.connection = None 
-        self.cursor = None
+        self.cursor  = None
         self._init_database_()
 
     def _init_database_(self):
+        self._create_db()
         self.connect() 
-        self.read()
+        if self.database == 'testgrocer':
+            self.read("test_init")
+        else: self.read()
         self.disconnect()
 
     def connect(self):
@@ -38,7 +41,10 @@ class DataController2:
             logging.debug("No active connection")
         else:
             try:
+                self.cursor.close()
                 self.connection.close() 
+                self.cursor = None
+                self.connection = None
                 logging.debug("Disconnected from MySQL database")
             except Error as e:
                 logging.error("Failed to disconnect from the database: %s", e)
@@ -61,9 +67,11 @@ class DataController2:
                 logging.error("Error executing query: %s", e)
         return -1
 
-    def fetch(self, query: SelectScripts, params=None):
+    def fetch(self, query: SelectScripts, params=[]):
         if not self.connection: 
             logging.debug("No active connection")
+        elif query.params != len(params):
+            logging.debug("Incorrect number of parameters given")
         else: 
             try:
                 if params:
@@ -88,4 +96,18 @@ class DataController2:
             except Error as e:
                 logging.error("Error executing SQL script '%s': %s", script, e)
 
-data = DataController2()
+    def _create_db(self):
+        try:
+            connection = connect(
+                host=self.host,
+                user=self.user,
+                password=self.password
+            )
+            if connection.is_connected():
+                cursor = connection.cursor()
+                cursor.execute("CREATE DATABASE IF NOT EXISTS {}".format(self.database))
+                logging.debug(f"Database {self.database} created successfully")
+                cursor.close()
+                connection.close()
+        except Error as e:
+            print("Error creating database:", e)
