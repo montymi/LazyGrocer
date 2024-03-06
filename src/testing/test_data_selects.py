@@ -19,8 +19,6 @@ class TestDataSelects(unittest.TestCase):
         self.dc = DataController(TESTDB)
         self.dc.connect()
 
-        
-
     def test_select_recipe(self):
         result = self.dc.fetch(SelectScripts.RECIPE)
         logging.debug(result)
@@ -28,7 +26,6 @@ class TestDataSelects(unittest.TestCase):
 
     def test_select_ingredient(self):
         result = self.dc.fetch(SelectScripts.INGREDIENT)
-        logging.debug(result)
         assert sorted(result) == sorted(self.ingredients)
 
     def test_select_instruction(self):

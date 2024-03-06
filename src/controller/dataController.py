@@ -61,7 +61,7 @@ class DataController:
         return []
         
     def read(self, script="init"):
-        if not self.connection: logging.info("No active connection")
+        if not self.connection: logging.debug("No active connection")
         else:
             if not script.endswith('.sql'): script += '.sql'
             try:

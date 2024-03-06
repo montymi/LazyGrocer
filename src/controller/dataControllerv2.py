@@ -6,15 +6,19 @@ import time
 from model.enums.scripts import InsertScripts, SelectScripts
 from model.enums.tables import Tables
 
+PASS = 'agent002!'
+USER = 'root'
+HOST = 'localhost'
+DB = 'lazygrocer'
+
 class DataController2:
-    def __init__(self, database='lazygrocer', host='localhost', user='root'):
+    def __init__(self, database=DB, host=HOST, user=USER, password=PASS):
         self.host = host
         self.user = user
-        self.password = getpass.getpass("Enter password: ")
+        self.password = password
         self.database = database
         self.connection = None 
         self.cursor  = None
-        self.TESTDB = 'testgrocer'
         self._init_database_()
     
     def clean(self):
@@ -23,7 +27,7 @@ class DataController2:
         try: 
             self.cursor.execute(f"DROP DATABASE IF EXISTS {self.database};")
             self.connection.commit()
-            logging.info(f"Succesfully cleaned {self.database}")
+            logging.debug(f"Succesfully cleaned {self.database}")
         except Error as e:
             logging.error(f"Error cleaning {self.database}:", e)
         self.disconnect()
@@ -93,7 +97,7 @@ class DataController2:
         
     def read(self, script="init"):
         if not self._is_connected_():
-            logging.info("No active connection")
+            logging.debug("No active connection")
         else:
             if not script.endswith('.sql'):
                 script += '.sql'
@@ -136,7 +140,7 @@ class DataController2:
             self.cursor.execute(f"USE {self.database}")
             self.read()
             if self._get_tables_() == [table.value for table in Tables]:
-                    logging.info(f'Successfully initialized {self.database}')
+                    logging.debug(f'Successfully initialized {self.database}')
             else: logging.error(f'Not all tables successfully created in {self.database}')
         except Error as e:
             logging.error(f'Error creating {self.database}:', e)
