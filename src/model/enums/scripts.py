@@ -9,8 +9,8 @@ class InsertScripts(Scripts):
 
     # entities
     RECIPE = ( "INSERT INTO Recipe (title, description, rating, meal_timing, favorite, date_published) VALUES (%s, %s, %s, %s, %s, %s);", 6 )
-    INGREDIENT = ( "INSERT INTO Ingredient (name, inventory, last_added) VALUES (%s, %s, %s);", 3 )
     INSTRUCTION = ( "INSERT INTO Instruction (recipe_title, cook_time, servings, calories, steps, url) VALUES (%s, %s, %s, %s, %s, %s);", 6 )
+    INGREDIENT = ( "INSERT INTO Ingredient (name, inventory, last_added) VALUES (%s, %s, %s);", 3 )
     RECIPELIST = ( "INSERT INTO RecipeList (name, description) VALUES (%s, %s);", 2 )
     INGREDIENTLIST = ( "INSERT INTO IngredientList (name, description) VALUES (%s, %s);", 2 )
 

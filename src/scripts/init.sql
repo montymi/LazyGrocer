@@ -1,7 +1,3 @@
--- database
-CREATE DATABASE IF NOT EXISTS lazygrocer;
-USE lazygrocer;
-
 -- tables
 CREATE TABLE IF NOT EXISTS Recipe (
     title VARCHAR(50) PRIMARY KEY,
@@ -9,7 +5,7 @@ CREATE TABLE IF NOT EXISTS Recipe (
     rating INTEGER,
     meal_timing VARCHAR(50) CHECK(meal_timing IN ('BREAKFAST', 'LUNCH', 'DINNER')),
     favorite BOOLEAN,
-    date_published DATE
+	date_published VARCHAR(10) CHECK(date_published REGEXP '[0-9]{4}-[0-9]{2}-[0-9]{2}')
 );
 
 CREATE TABLE IF NOT EXISTS RecipeList (
@@ -18,7 +14,7 @@ CREATE TABLE IF NOT EXISTS RecipeList (
 );
 
 CREATE TABLE IF NOT EXISTS Instruction (
-    recipe_title VARCHAR(50),
+    recipe_title VARCHAR(50) PRIMARY KEY,
     cook_time INTEGER,
     servings INTEGER,
     calories INTEGER,
@@ -33,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Instruction (
 CREATE TABLE IF NOT EXISTS Ingredient (
     name VARCHAR(50) PRIMARY KEY,
     inventory VARCHAR(50),
-    last_added DATE
+    last_added VARCHAR(10) CHECK(last_added REGEXP '[0-9]{4}-[0-9]{2}-[0-9]{2}')
 );
 
 CREATE TABLE IF NOT EXISTS IngredientList (

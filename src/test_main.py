@@ -10,7 +10,7 @@ def test_suite():
     loader = unittest.TestLoader()
     suite = unittest.TestSuite()
     suite.addTest(loader.loadTestsFromTestCase(TestDataInserts))
- #   suite.addTest(loader.loadTestsFromTestCase(TestDataSelects))
+    suite.addTest(loader.loadTestsFromTestCase(TestDataSelects))
     return suite
 
 if __name__ == '__main__':

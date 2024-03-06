@@ -1,29 +1,35 @@
 import unittest
 import logging
+from datetime import datetime
 
-from controller.dataController import DataController
+from controller.dataControllerv2 import DataController2 as DataController
 from model.enums.scripts import SelectScripts
+
+TESTDB = 'testgrocer'
 
 class TestDataSelects(unittest.TestCase):
     @classmethod
     def setUpClass(self):
-        self.dc = DataController()
+        self.ingredients = [
+            ('Spaghetti', "Half a package", '2024-03-05'),
+            ('Bacon', "3 strips", '2024-03-05'),
+            ('Eggs', "3 whole", '2024-03-05'),
+            ('Parmesan Cheese', "1 cup", '2024-03-05'),
+            ('Black Pepper', "1 teaspoon", '2024-03-05')]
+        self.dc = DataController(TESTDB)
         self.dc.connect()
+
+        
 
     def test_select_recipe(self):
         result = self.dc.fetch(SelectScripts.RECIPE)
         logging.debug(result)
-        assert result == [('Pasta Carbonara', 'Classic Italian pasta dish with bacon, eggs, and cheese sauce', 4, 'DINNER', True, '2024-03-03')]
+        assert result == [('Pasta Carbonara', 'Classic Italian pasta dish with bacon, eggs, and cheese sauce', 4, 'DINNER', True, '2024-03-05')]
 
     def test_select_ingredient(self):
         result = self.dc.fetch(SelectScripts.INGREDIENT)
         logging.debug(result)
-        assert result == [
-            ('Spaghetti', "Half a package", '2024-03-03'),
-            ('Bacon', "3 strips", '2024-03-03'),
-            ('Eggs', "3 whole", '2024-03-03'),
-            ('Parmesan Cheese', "1 cup", '2024-03-03'),
-            ('Black Pepper', "1 teaspoon", '2024-03-03')]
+        assert sorted(result) == sorted(self.ingredients)
 
     def test_select_instruction(self):
         result = self.dc.fetch(SelectScripts.INSTRUCTION)
