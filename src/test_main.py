@@ -13,10 +13,7 @@ def test_suite():
     return suite
 
 if __name__ == '__main__':
-    # Initialize ArgumentParser
     parser = argparse.ArgumentParser(description='Run unit tests with different logging levels')
-    
-    # Add optional argument for logging level
     parser.add_argument('-D', '--debug', action='store_const', const=logging.DEBUG, dest='log_level', 
                         help='Set logging level to DEBUG')
     parser.add_argument('-I', '--info', action='store_const', const=logging.INFO, dest='log_level', 
@@ -27,16 +24,12 @@ if __name__ == '__main__':
                         help='Set logging level to ERROR')
     parser.add_argument('-C', '--critical', action='store_const', const=logging.CRITICAL, dest='log_level',
                         help='Set logging level to CRITICAL')
-
-    # Parse arguments
     args = parser.parse_args()
 
-    # Configure logging based on the provided logging level
     if args.log_level is not None:
         logging.basicConfig(level=args.log_level)
     else:
         logging.basicConfig(level=logging.INFO)
 
-    # Run the test suite
     runner = unittest.TextTestRunner()
     runner.run(test_suite())
