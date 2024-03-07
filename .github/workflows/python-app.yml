@@ -38,6 +38,7 @@ jobs:
       - name: Run Python script
         id: test_result
         run: |
+          cd src
           python test_main.py || echo "Test failed"
 
       - name: Determine test result
