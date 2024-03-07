@@ -35,8 +35,17 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run tests
+      - name: Run Python script
+        id: test_result
         run: |
-          cd src
-          python test_main.py
+          python test_main.py || echo "Test failed"
+
+      - name: Determine test result
+        run: |
+          if [[ "${{ steps.test_result.outputs.stdout }}" == *"OK"* ]]; then
+            echo "Test passed"
+          else
+            echo "Test failed"
+            exit 1
+          fi
 
