@@ -1,16 +1,28 @@
-name: Python Test
+name: Python Test with MySQL
 
 on:
   push:
     branches:
-      - main  # Adjust the branch as needed
+      - main
   pull_request:
     branches:
-      - main  # Adjust the branch as needed
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_database
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout code
@@ -19,7 +31,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'  # Specify the Python version you need
+          python-version: '3.11.2'
 
       - name: Install dependencies
         run: |
@@ -28,3 +40,4 @@ jobs:
       - name: Run tests
         run: |
           python src/test_main.py
+
