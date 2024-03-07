@@ -16,6 +16,7 @@ jobs:
       mysql:
         image: mysql:8.0
         env:
+          MYSQL_ROOT_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
           MYSQL_DATABASE: testgrocer
           MYSQL_USER: lg
           MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
