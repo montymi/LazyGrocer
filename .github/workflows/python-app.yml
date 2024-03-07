@@ -26,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Python
+      - name: Set up python
         uses: actions/setup-python@v2
         with:
           python-version: '3.11.2'
@@ -35,18 +35,6 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Run Python script
-        id: test_result
+      - name: Run main test script
         run: |
-          cd src
-          python test_main.py || echo "Test failed"
-
-      - name: Determine test result
-        run: |
-          if [[ "${{ steps.test_result.outputs.stdout }}" == *"OK"* ]]; then
-            echo "Test passed"
-          else
-            echo "Test failed"
-            exit 1
-          fi
-
+          cd src && python test_main.py
