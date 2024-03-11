@@ -9,3 +9,8 @@ class Tables(Enum):
     RINCLUDESI = 'RincludesI'
     RINRL = 'RinRL'
     ILFORI = 'ILforI'
+
+class MealTimings(Enum):
+    DINNER = 'DINNER'
+    LUNCH = 'LUNCH'
+    BREAKFAST = 'BREAKFAST'

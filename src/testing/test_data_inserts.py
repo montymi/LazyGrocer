@@ -28,7 +28,6 @@ class TestDataInserts(unittest.TestCase):
         except ValueError:
             logging.error("Invalid date format. Please provide a date in the format YYYY-MM-DD.")
             return None
-    
 
     def test_Ainsert_recipe(self):
         recipe_data = ('Pasta Carbonara', 'Classic Italian pasta dish with bacon, eggs, and cheese sauce', 4, 'DINNER', True, '2024-03-05')

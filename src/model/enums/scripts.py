@@ -32,3 +32,8 @@ class SelectScripts(Scripts):
     RINCLUDESI = ( "SELECT * FROM RincludesI;", 0 )
     RINRL = ( "SELECT * FROM RinRL;", 0 )
     ILFORI = ( "SELECT * FROM ILforI;", 0 )
+
+class ChefScripts(Scripts):
+    GET_RECIPE_LISTS = ("SELECT name, COUNT(recipe_title) AS recipe_count FROM RinRL WHERE recipe_title IN (SELECT title FROM Recipe) GROUP BY recipe_list_name", 0)
+    GET_INGREDIENT_LISTS = ("SELECT name, COUNT(ingredient_name) AS ingredient_count FROM ILforI GROUP BY ingredient_list_name", 0)
+    LOAD_FAVORITES = ("SELECT * FROM Recipe WHERE favorite = 1", 0)

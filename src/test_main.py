@@ -13,6 +13,7 @@ def test_suite():
     return suite
 
 if __name__ == '__main__':
+    # parse arguments
     parser = argparse.ArgumentParser(description='Run unit tests with different logging levels')
     parser.add_argument('-D', '--debug', action='store_const', const=logging.DEBUG, dest='log_level', 
                         help='Set logging level to DEBUG')
@@ -31,5 +32,6 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(level=logging.INFO)
 
+    # run tests in test_suite()
     runner = unittest.TextTestRunner()
     runner.run(test_suite())
