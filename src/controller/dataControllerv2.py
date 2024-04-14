@@ -6,7 +6,7 @@ import time
 from model.enums.scripts import InsertScripts, SelectScripts
 from model.enums.tables import Tables
 
-PASS = 'agent002!'
+PASS = 'YOUR_PASSWORD_HERE'
 USER = 'root'
 HOST = 'localhost'
 DB = 'lazygrocer'
