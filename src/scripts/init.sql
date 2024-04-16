@@ -246,22 +246,335 @@ END //
 DELIMITER ;
 
 
--- Functions: 
--- create:
--- - Recipe 
--- - RecipeList
--- - GroceryList
--- read: 
--- - Recipe 
--- - RecipeList
--- - GroceryList
--- - Ingredient
--- update: 
--- - Recipe 
--- - RecipeList
--- - GroceryList
--- - Ingredient
--- delete:
--- - Recipe 
--- - RecipeList
--- - GroceryList
+-- Allows the user to add a recipe to the recipe table
+DELIMITER //
+
+CREATE PROCEDURE add_recipe(
+    IN recipe_title VARCHAR(50),
+    IN recipe_description TEXT,
+    IN date_published DATE
+)
+BEGIN
+    INSERT INTO Recipe (title, description, date_published)
+    VALUES (recipe_title, recipe_description, date_published);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to add a rating to the rating table
+DELIMITER //
+
+CREATE PROCEDURE add_rating(
+    IN recipe_title VARCHAR(50),
+    IN score INTEGER,
+    IN rating_description TEXT,
+    IN date_added DATE
+)
+BEGIN
+    INSERT INTO Rating (recipe_title, score, description, date_added)
+    VALUES (recipe_title, score, rating_description, date_added);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to add steps to the steps table
+DELIMITER //
+
+CREATE PROCEDURE add_step(
+    IN recipe_title VARCHAR(50),
+    IN step_description TEXT
+)
+BEGIN
+    INSERT INTO Steps (recipe_title, description)
+    VALUES (recipe_title, step_description);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to add instructons to the instructions table
+DELIMITER //
+
+CREATE PROCEDURE add_instruction(
+    IN recipe_title VARCHAR(50),
+    IN cook_time VARCHAR(50),
+    IN prep_time VARCHAR(50),
+    IN servings INTEGER,
+    IN calories INTEGER
+)
+BEGIN
+    INSERT INTO Instruction (recipe_title, cook_time, prep_time, servings, calories)
+    VALUES (recipe_title, cook_time, prep_time, servings, calories);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to add a recipe list to the recipe list table
+DELIMITER //
+
+CREATE PROCEDURE add_recipe_list(
+    IN list_name VARCHAR(50),
+    IN list_description TEXT
+)
+BEGIN
+    INSERT INTO RecipeList (name, description)
+    VALUES (list_name, list_description);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to add a grocery list to the grocery list table
+DELIMITER //
+
+CREATE PROCEDURE add_grocery_list(
+    IN list_name VARCHAR(50),
+    IN list_description TEXT
+)
+BEGIN
+    INSERT INTO GroceryList (name, description)
+    VALUES (list_name, list_description);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to add an ingredient to the ingredient table 
+DELIMITER //
+
+CREATE PROCEDURE add_ingredient(
+    IN ingredient_name VARCHAR(50),
+    IN inventory VARCHAR(50),
+    IN last_added DATE
+)
+BEGIN
+    INSERT INTO Ingredient (name, inventory, last_added)
+    VALUES (ingredient_name, inventory, last_added);
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the recipe table
+DELIMITER //
+
+CREATE PROCEDURE update_recipe(
+    IN old_recipe_title VARCHAR(50),
+    IN new_recipe_title VARCHAR(50),
+    IN new_recipe_description TEXT,
+    IN new_date_published DATE
+)
+BEGIN
+    UPDATE Recipe
+    SET title = new_recipe_title,
+        description = new_recipe_description,
+        date_published = new_date_published
+    WHERE title = old_recipe_title;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the rating table 
+DELIMITER //
+
+CREATE PROCEDURE update_rating(
+    IN recipe_title VARCHAR(50),
+    IN new_score INTEGER,
+    IN new_rating_description TEXT,
+    IN new_date_added DATE
+)
+BEGIN
+    UPDATE Rating
+    SET score = new_score,
+        description = new_rating_description,
+        date_added = new_date_added
+    WHERE recipe_title = recipe_title;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the instructions table 
+DELIMITER //
+
+CREATE PROCEDURE update_instruction(
+    IN recipe_title VARCHAR(50),
+    IN new_cook_time VARCHAR(50),
+    IN new_prep_time VARCHAR(50),
+    IN new_servings INTEGER,
+    IN new_calories INTEGER
+)
+BEGIN
+    UPDATE Instruction
+    SET cook_time = new_cook_time,
+        prep_time = new_prep_time,
+        servings = new_servings,
+        calories = new_calories
+    WHERE recipe_title = recipe_title;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the steps table 
+DELIMITER //
+
+CREATE PROCEDURE update_step(
+    IN recipe_title VARCHAR(50),
+    IN step_id INTEGER,
+    IN new_step_description TEXT
+)
+BEGIN
+    UPDATE Steps
+    SET description = new_step_description
+    WHERE recipe_title = recipe_title AND id = step_id;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the recipe list table 
+DELIMITER //
+
+CREATE PROCEDURE update_recipe_list(
+    IN old_list_name VARCHAR(50),
+    IN new_list_name VARCHAR(50),
+    IN new_list_description TEXT
+)
+BEGIN
+    UPDATE RecipeList
+    SET name = new_list_name,
+        description = new_list_description
+    WHERE name = old_list_name;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the grocery list table
+DELIMITER //
+
+CREATE PROCEDURE update_grocery_list(
+    IN old_list_name VARCHAR(50),
+    IN new_list_name VARCHAR(50),
+    IN new_list_description TEXT
+)
+BEGIN
+    UPDATE GroceryList
+    SET name = new_list_name,
+        description = new_list_description
+    WHERE name = old_list_name;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the ingredient table
+DELIMITER //
+
+CREATE PROCEDURE update_ingredient(
+    IN old_ingredient_name VARCHAR(50),
+    IN new_ingredient_name VARCHAR(50),
+    IN new_inventory VARCHAR(50),
+    IN new_last_added DATE
+)
+BEGIN
+    UPDATE Ingredient
+    SET name = new_ingredient_name,
+        inventory = new_inventory,
+        last_added = new_last_added
+    WHERE name = old_ingredient_name;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to update the values in the favorites table
+DELIMITER //
+
+CREATE PROCEDURE update_favorite(
+    IN recipe_title VARCHAR(50),
+    IN new_date_added DATE,
+    IN new_description TEXT
+)
+BEGIN
+    UPDATE Favorite
+    SET date_added = new_date_added,
+        description = new_description
+    WHERE recipe_title = recipe_title;
+END //
+
+DELIMITER ;
+
+
+
+-- Allows the user to delete a recipe from the recipe table 
+DELIMITER //
+
+CREATE PROCEDURE delete_recipe(
+    IN recipe_title VARCHAR(50)
+)
+BEGIN
+    DELETE FROM Rating
+    WHERE recipe_title = recipe_title;
+
+    DELETE FROM Favorite
+    WHERE recipe_title = recipe_title;
+
+    DELETE FROM Instruction
+    WHERE recipe_title = recipe_title;
+
+    DELETE FROM Steps
+    WHERE recipe_title = recipe_title;
+
+    DELETE FROM Recipe
+    WHERE title = recipe_title;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to delete a recipe list from the recipe list table 
+DELIMITER //
+
+CREATE PROCEDURE delete_recipe_list(
+    IN list_name VARCHAR(50)
+)
+BEGIN
+    DELETE FROM RecipeList
+    WHERE name = list_name;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to delete an ingredient from the ingredient table 
+DELIMITER //
+
+CREATE PROCEDURE delete_ingredient(
+    IN ingredient_name VARCHAR(50)
+)
+BEGIN
+    DELETE FROM Ingredient
+    WHERE name = ingredient_name;
+END //
+
+DELIMITER ;
+
+
+-- Allows the user to delete a grocery list from the grocery list table 
+DELIMITER //
+
+CREATE PROCEDURE delete_grocery_list(
+    IN list_name VARCHAR(50)
+)
+BEGIN
+    DELETE FROM GroceryList
+    WHERE name = list_name;
+END //
+
+DELIMITER ;
