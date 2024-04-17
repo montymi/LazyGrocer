@@ -53,6 +53,7 @@ object includes {
     quantity
 }
 diamond DIncludes
+diamond stepdiamond
 
 Rating }o--o| Recipe 
 Favorite }o--|| Recipe 
@@ -61,7 +62,8 @@ DIncludes --|{ Ingredient: >
 DIncludes . includes
 Recipe }|-o{ RecipeList: contains <
 Ingredient }|-o{ GroceryList: for <
-Instruction ||-|| Recipe: explains >
-Instruction ||--|{ Step: describes <
+Instruction ||- stepdiamond
+stepdiamond -|| Recipe: explains >
+stepdiamond --|{ Step: describes <
 
 @enduml

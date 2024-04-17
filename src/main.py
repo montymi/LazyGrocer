@@ -2,12 +2,61 @@ import logging
 import argparse
 
 from controller.dataControllerv2 import DataController2 as DataController
+from model.enums.scripts import SelectScripts, InsertScripts
 
 def main(db):
-    db.connect()
-    print("HI")
-    db.disconnect()
-    print(type(db))
+    print("Select Service:\n1. Create\n2. Read\n3. Update\n4. Replace")
+    service = input("Enter Service Key Number: ")
+    if service == 1: # create
+        print("Select CREATE Service:\n1. Recipe\n2. Grocery List\n3. Recipe List")
+        create_service = input("Enter CREATE Key Number: ")
+        if create_service == 1: # recipe
+            pass 
+        elif create_service == 2: # grocery list
+            pass 
+        elif create_service == 3: # recipe list
+            pass
+        else:
+            pass 
+    elif service == 2: # read
+        print("Select READ Service:\n1. Recipe\n2. Ingredient 3. Grocery List\n4. Recipe List")
+        read_service = input("Enter READ Key Number: ")
+        if read_service == 1: # recipe
+            pass 
+        elif read_service == 2: # ingredient
+            pass 
+        elif read_service == 3: # grocery list
+            pass
+        elif read_service == 4: # recipe list
+            pass
+        else:
+            pass  
+    elif service == 3: # update
+        print("Select UPDATE Service:\n1. Recipe\n2. Ingredient 3. Grocery List\n4. Recipe List")
+        update_service = input("Enter UPDATE Key Number: ")
+        if update_service == 1: # recipe
+            pass 
+        elif update_service == 2: # ingredient
+            pass 
+        elif update_service == 3: # grocery list
+            pass
+        elif update_service == 4: # recipe list
+            pass
+        else:
+            pass  
+        pass 
+    elif service == 4: # delete
+        print("Select UPDATE Service:\n1. Recipe\n2. Ingredient 3. Grocery List\n4. Recipe List")
+        delete_service = input("Enter UPDATE Key Number: ")
+        if delete_service == 1: # recipe
+            pass 
+        elif delete_service == 3: # grocery list
+            pass
+        elif delete_service == 4: # recipe list
+            pass
+        else:
+            pass  
+        pass 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run unit tests with different logging levels')
