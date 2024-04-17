@@ -1,4 +1,4 @@
-from pymysql import connect, Error
+from mysql.connector import connect, Error
 import getpass
 import logging
 import time
@@ -103,7 +103,7 @@ class DataController2:
                 script += '.sql'
             try:
                 with open(f'scripts/{script}', 'r') as f:
-                    self.cursor.execute(f.read())
+                    self.cursor.execute(f.read(), multi=True)
                 time.sleep(3) # waits for tables to be created
                 logging.debug("%s executed successfully", script)
             except Error as e:
@@ -146,4 +146,4 @@ class DataController2:
             logging.error(f'Error creating {self.database}:', e)
 
     def _is_connected_(self):
-        return self.connection is not None and self.connection.open
+        return self.connection is not None and self.connection.is_connected()
