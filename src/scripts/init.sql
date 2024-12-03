@@ -1,5 +1,4 @@
-DROP DATABASE lazygrocer;
-CREATE DATABASE IF NOT EXISTS lazygrocer;
+CREATE DATABASE lazygrocer;
 use lazygrocer;
 
 -- tables

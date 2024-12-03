@@ -1,12 +1,9 @@
 import logging
 import argparse
 
-from controller.dataControllerv2 import DataController2 as DataController
+from controller.dataController import DataController as DataController
 
 def main(db):
-    db.connect()
-    print("HI")
-    db.disconnect()
     print(type(db))
 
 if __name__ == '__main__':
