@@ -1,4 +1,3 @@
-# Use an official Python runtime as a parent image
 FROM python:3.10-slim
 
 # Set environment variables
@@ -8,20 +7,26 @@ ENV PYTHONUNBUFFERED=1
 # Set working directory in the container
 WORKDIR /src
 
-# Install system dependencies for MySQL client
+# Install system dependencies for MySQL client and MySQL server
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    default-libmysqlclient-dev build-essential && \
-    rm -rf /var/lib/apt/lists/*
+default-libmysqlclient-dev build-essential && \
+rm -rf /var/lib/apt/lists/*
 
-# Copy the application code to the container
-COPY . /src/
+# Copy only requirements to leverage Docker cache
+COPY requirements.txt /src/
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
+# Copy the application code to the container (only the src folder)
+COPY src/ /src/
+
 # Expose the port the app runs on (optional)
 EXPOSE 8000
 
-# Command to run the application
-CMD ["python", "src/main.py"]
+# Define a volume for persistent data
+VOLUME /src/data
+
+# Start MySQL service and run the application
+CMD ["python", "./main.py"]

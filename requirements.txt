@@ -1,1 +1,4 @@
+mysql.connector
+pymysql
+cryptography
 mysql-connector-python

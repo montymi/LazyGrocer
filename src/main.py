@@ -1,10 +1,13 @@
 import logging
 import argparse
 
-from controller.dataController import DataController as DataController
+from controller.dataControllerv2 import DataController2 as DataController
+from controller.appController import AppController
 
 def main(db):
-    print(type(db))
+    ac = AppController(db)
+    while True:
+        ac.start()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Run unit tests with different logging levels')
@@ -25,5 +28,5 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(level=logging.INFO)
 
-    db = DataController()
+    db = DataController('lazygrocer')
     main(db)

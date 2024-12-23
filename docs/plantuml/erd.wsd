@@ -7,10 +7,18 @@ footer CS3200 Final Project: Michael Montanaro 2024
 object Recipe {
     title <<PK>> 
     description
-    rating
-    meal_timing
-    favorite?
     date_published
+}
+
+object Rating {
+    score 
+    description
+    date_added
+}
+
+object Favorite {
+    date_added
+    description
 }
 
 object RecipeList {
@@ -20,10 +28,14 @@ object RecipeList {
 
 object Instruction {
     cook_time
+    prep_time
     servings
     calories
-    steps
-    url
+}
+
+object Step {
+    id <<PK>>
+    description
 }
 
 object Ingredient {
@@ -32,29 +44,26 @@ object Ingredient {
     last_added
 }
 
-object IngredientList {
+object GroceryList {
     name <<PK>>
     description
-}
-
-object Chef {
-    username <<pk>>
-    first_name
-    last_name
-    email
 }
 
 object includes {
     quantity
 }
 diamond DIncludes
+diamond stepdiamond
 
+Rating }o--o| Recipe 
+Favorite }o--|| Recipe 
 Recipe }|-- DIncludes
 DIncludes --|{ Ingredient: >
 DIncludes . includes
 Recipe }|-o{ RecipeList: contains <
-Ingredient }|-o{ IngredientList: for <
-Chef ||--o{ Recipe: publishes >
-Instruction ||-|| Recipe: explains >
+Ingredient }|-o{ GroceryList: for <
+Instruction ||- stepdiamond
+stepdiamond -|| Recipe: explains >
+stepdiamond --|{ Step: describes <
 
 @enduml

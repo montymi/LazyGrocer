@@ -1,29 +1,32 @@
 import unittest
 import logging
-from datetime import datetime
+import datetime
 
 from controller.dataControllerv2 import DataController2 as DataController
 from model.enums.scripts import SelectScripts
 
-TESTDB = 'testgrocer'
+TESTDB = 'lazygrocer'
 
 class TestDataSelects(unittest.TestCase):
     @classmethod
     def setUpClass(self):
         self.ingredients = [
-            ('Spaghetti', "Half a package", '2024-03-05'),
-            ('Bacon', "3 strips", '2024-03-05'),
-            ('Eggs', "3 whole", '2024-03-05'),
-            ('Parmesan Cheese', "1 cup", '2024-03-05'),
-            ('Black Pepper', "1 teaspoon", '2024-03-05')]
+            ('Spaghetti', 'Mac', "Half a package"),
+            ('Parmesan Cheese', 'Mac', "1 cup"),
+            ('Black Pepper', 'Mac', "1 teaspoon")
+        ]
         self.dc = DataController(TESTDB)
         self.dc.connect()
 
     def test_select_recipe(self):
-        result = self.dc.fetch(SelectScripts.RECIPE)
+        result = self.dc.procedure('read_recipe', ('Mac', ))
         logging.debug(result)
-        assert result == [('Pasta Carbonara', 'Classic Italian pasta dish with bacon, eggs, and cheese sauce', 4, 'DINNER', True, '2024-03-05')]
-
+        assert result == [[('Mac', 'Cheesier and delicious!', datetime.date(2024, 4, 17), 5, 'Greater recipe!', '12 min', '5 min', 5, 1500)]]
+ 
+    @classmethod
+    def tearDownClass(self):
+        self.dc.disconnect()
+'''
     def test_select_ingredient(self):
         result = self.dc.fetch(SelectScripts.INGREDIENT)
         assert sorted(result) == sorted(self.ingredients)
@@ -57,7 +60,4 @@ class TestDataSelects(unittest.TestCase):
         result = self.dc.fetch(SelectScripts.ILFORI)
         logging.debug(result)
         assert result == [('Essentials', 'Spaghetti')]
-    
-    @classmethod
-    def tearDownClass(self):
-        self.dc.disconnect()
+''' 
