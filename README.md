@@ -150,7 +150,7 @@ See the [open issues](https://github.com/montymi/LazyGrocer/issues) for a full l
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the GPL License. See `LICENSE.txt` for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
