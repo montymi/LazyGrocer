@@ -123,7 +123,7 @@ LazyGrocer/
 - [ ] add exporting recipes as JSON
 - [X] add installation instructions
 - [X] add Structure section
-- [ ] add Sanay and Colby information in Contact section
+- [X] add Sanay and Colby information in Contact section
 - [X] containerize for reproducibility
 - [ ] add passive start in detached mode
 - [ ] add APIs with FastAPI
