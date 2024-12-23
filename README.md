@@ -42,6 +42,7 @@ Automatically generate your shopping list for a selected number of recipes. Impo
 ### Built With
 [![Python][pythonLogo]][pythonLogo-url]
 [![Docker][dockerLogo]][dockerLogo-url]
+[![Docker Compose][dcLogo]][dcLogo-url]
 [![MySQL][mysqlLogo]][mysqlLogo-url]
 
 
@@ -199,6 +200,8 @@ Sanay Doshi
 [mysqlLogo-url]: https://www.mysql.com/
 [dockerLogo]: https://img.shields.io/badge/Docker-black?style=for-the-badge&logo=docker
 [dockerLogo-url]: https://www.docker.com/
+[dcLogo]: https://img.shields.io/badge/Docker%20Compose-black?style=for-the-badge&logo=docker&logoColor=purple
+[dcLogo-url]: https://docs.docker.com/compose/
 [contributors-shield]: https://img.shields.io/github/contributors/montymi/LazyGrocer.svg?style=for-the-badge
 [contributors-url]: https://github.com/montymi/LazyGrocer/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/montymi/LazyGrocer.svg?style=for-the-badge
