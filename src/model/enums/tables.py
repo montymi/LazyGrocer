@@ -2,10 +2,13 @@ from enum import Enum
 
 class Tables(Enum):
     RECIPE = 'Recipe'
+    RATING = 'Rating'
+    FAVORITE = 'Favorite'
     RECIPELIST = 'RecipeList'
     INSTRUCTION = 'Instruction'
+    STEPS = 'Steps'
     INGREDIENT = 'Ingredient'
-    INGREDIENTLIST = 'IngredientList'
+    GROCERYLIST = 'GroceryList'
     RINCLUDESI = 'RincludesI'
     RINRL = 'RinRL'
     ILFORI = 'ILforI'

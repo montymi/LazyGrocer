@@ -1,4 +1,4 @@
-DROP DATABASE lazygrocer;
+DROP DATABASE IF EXISTS lazygrocer;
 CREATE DATABASE IF NOT EXISTS lazygrocer;
 use lazygrocer;
 
@@ -510,7 +510,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE update_rating(
-    IN recipe_title VARCHAR(50),
+    IN r_title VARCHAR(50),
     IN new_score INTEGER,
     IN new_rating_description TEXT,
     IN new_date_added DATE
@@ -520,7 +520,7 @@ BEGIN
     SET score = new_score,
         description = new_rating_description,
         date_added = new_date_added
-    WHERE recipe_title = recipe_title;
+    WHERE recipe_title = r_title;
 END //
 
 DELIMITER ;
@@ -530,7 +530,7 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE update_instruction(
-    IN recipe_title VARCHAR(50),
+    IN r_title VARCHAR(50),
     IN new_cook_time VARCHAR(50),
     IN new_prep_time VARCHAR(50),
     IN new_servings INTEGER,
@@ -542,7 +542,7 @@ BEGIN
         prep_time = new_prep_time,
         servings = new_servings,
         calories = new_calories
-    WHERE recipe_title = recipe_title;
+    WHERE recipe_title = r_title;
 END //
 
 DELIMITER ;
@@ -552,14 +552,14 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE update_step(
-    IN recipe_title VARCHAR(50),
+    IN r_title VARCHAR(50),
     IN step_id INTEGER,
     IN new_step_description TEXT
 )
 BEGIN
     UPDATE Steps
     SET description = new_step_description
-    WHERE recipe_title = recipe_title AND id = step_id;
+    WHERE recipe_title = r_title AND id = step_id;
 END //
 
 DELIMITER ;
@@ -569,14 +569,14 @@ DELIMITER ;
 DELIMITER //
 
 CREATE PROCEDURE update_favorite(
-    IN recipe_title VARCHAR(50),
+    IN r_title VARCHAR(50),
     IN new_date_added DATE,
     IN new_description TEXT
 )
 BEGIN
     -- Insert the recipe into the Favorite table
     INSERT INTO Favorite (recipe_title, date_added, description)
-    VALUES (recipe_title, new_date_added, new_description);
+    VALUES (r_title, new_date_added, new_description);
 END //
 
 DELIMITER ;
@@ -650,7 +650,8 @@ END //
 
 DELIMITER ;
 
-/*
+
+
 CALL add_recipe('Mac & Cheese', 'Cheesy and delicious!', '2024-04-15');
 CALL add_recipe('Chicken Parm', 'So good!', '2024-04-16');
 CALL add_recipe('Pizza', 'Cheat Meal', '2024-04-17');
@@ -702,7 +703,7 @@ CALL delete_grocery_list('GL1');
 CALL delete_recipe_from_favorites('Mac & Cheese v2');
 
 CALL read_all_recipes();
-CALL read_recipe('Mac & Cheese');
+CALL read_recipe('Mac & Cheese v2');
 CALL read_recipe('Chicken Parm');
 CALL read_recipe('Pizza');
 CALL read_all_recipe_lists();
@@ -714,7 +715,7 @@ CALL read_grocery_list('GL2');
 CALL read_all_ingredients();
 CALL read_ingredient('Cheddar Cheese');
 CALL read_ingredient('Dough');
-CALL get_recipe_steps('Mac & Cheese');
+CALL get_recipe_steps('Mac & Cheese v2');
 CALL get_recipe_steps('Chicken Parm');
 CALL get_recipe_steps('Pizza');
 CALL get_all_favorites();
@@ -723,4 +724,3 @@ CALL get_recipes_by_list_name('Dos');
 CALL get_ingredients_for_recipes('Mac & Cheese,Pizza,Chicken Parm');
 CALL get_ingredients_for_recipes('Mac & Cheese,Chicken Parm');
 CALL get_ingredients_for_recipes('Mac & Cheese');
-*/

@@ -1,7 +1,7 @@
 # src/controller/__init__.py
 
 # Import controllers
-from .dataController import DataController
+from .dataControllerv2 import DataController2 as DataController
 # from .appController import AppController
 # from .listController import ListControler
 
