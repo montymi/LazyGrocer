@@ -9,15 +9,14 @@
 
 <!-- PROJECT LOGO -->
 <br />
-<div align="center">
-  <h2 align="center">LazyGrocer</h2>
 
-  <p align="center">
-    Created for: CS3200 Database Design Final Project  
-    <br />
-    By: Michael Montanaro, Colby Hegarty, Sanay Doshi
-  </p>
-</div>
+## 🛒 LazyGrocer
+
+###  By: Michael Montanaro, Colby Hegarty, Sanay Doshi
+- Created for: CS3200 Database Design Final Project
+- [![Github Actions][ghactionsLogo]][ghactionsLogo-url]
+
+<br />
 
 <!-- TABLE OF CONTENTS -->
 <details>
@@ -38,35 +37,47 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Automatically generate your shopping list for a selected number of recipes.Import or manually add recipes to a locally stored database.
+Automatically generate your shopping list for a selected number of recipes. Import or manually add recipes to a locally stored database.
+
+### Built With
+[![Python][pythonLogo]][pythonLogo-url]
+[![Docker][dockerLogo]][dockerLogo-url]
+[![MySQL][mysqlLogo]][mysqlLogo-url]
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
+
+Clone and navigate into the repository:
+```bash
+git clone git@github.com:montymi/LazyGrocer && cd LazyGrocer
+```
+
 On Unix Systems:
 ```bash
-$ python --version && python3 --version
-# TODO: add installation instructions 
-$ lg --version
+chmod +x ./start.sh
+./start.sh -i
+```
+On Windows:
+```bash
+./start.sh
 ```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-```python
-// Start app for UI
 
-lg
-
-
-// Use CLI tools
-
-lg recipe            // return list of recipes
-lg ingredient        // return list of ingredients
-lg write [ *file* ]  // create a recipe
-lg url *link*        // create recipe from valid link
-
+Once the application is started in interactive mode, a container will startup, connect to the local mysql volume and prompt you with ID navigation through this menu:
+```
+Select Service:
+1. Create
+2. Read
+3. Update
+4. Delete
+5. Quit
+Service ID: _
 ```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -74,26 +85,33 @@ lg url *link*        // create recipe from valid link
 <!-- STRUCTURE -->
 ## Structure
 ```
-${LAZYGROCER_ROOT}
-├── lazyGrocer.py
-├── docs
-|   ├── plantum1
-|   |   ├── class.wsd
-|   |   └── erd.wsd
-│   ├── diagrams
-|   |   ├── class/LazyGrocerClassDiagram.png
-|   |   └── erd/LazyGrocerERDdiagram.png
-├── services
-|   ├── TODO
-|   └── TODO
-├── artifcats
-|   ├── data
-|   |   └── test.db
-|   ├── exports
-|   |    └── example.json
+LazyGrocer/
+├── .github/
+│   └── workflows/
+│       └── python-app.yml
+├── scripts/
+│   └── init.sql
+├── src/
+│   ├── controller/
+│   │   ├── dataControllerv2.py
+│   │   └── __init__.py
+│   ├── model/
+│   │   ├── enums/
+│   │   │   ├── scripts.py
+│   │   │   ├── tables.py
+│   │   │   └── __init__.py
+│   │   └── __init__.py
+│   ├── testing/
+│   │   ├── test_data_inserts.py
+│   │   ├── test_data_selects.py
+│   │   └── __init__.py
+│   ├── main.py
+│   ├── requirements.txt
+│   └── __init__.py
+├── docker-compose.yml
+├── Dockerfile
+├── start.sh
 ├── README.md
-├── __init__.py
-├── .gitignore
 └── LICENSE.txt
 ```
 
@@ -102,9 +120,13 @@ ${LAZYGROCER_ROOT}
 <!-- TASKS -->
 ## Tasks
 - [ ] add exporting recipes as JSON
-- [ ] add installation instructions
-- [ ] add Structure section
+- [X] add installation instructions
+- [X] add Structure section
 - [ ] add Sanay and Colby information in Contact section
+- [X] containerize for reproducibility
+- [ ] add passive start in detached mode
+- [ ] add APIs with FastAPI
+- [ ] add CLI support when started in detached mode
 
 See the [open issues](https://github.com/montymi/LazyGrocer/issues) for a full list of issues and proposed features.
 
@@ -127,8 +149,6 @@ See the [open issues](https://github.com/montymi/LazyGrocer/issues) for a full l
 
 <!-- LICENSE -->
 ## License
-
-*Documentation must include a license section in which the type of license and a link or reference to the full license in the repository is given.*
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
 
@@ -158,15 +178,23 @@ Project Link: [https://github.com/montymi/LazyGrocer](https://github.com/montymi
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/montymi/ClearDocs.svg?style=for-the-badge
-[contributors-url]: https://github.com/montymi/ClearDocs/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/montymi/ClearDocs.svg?style=for-the-badge
-[forks-url]: https://github.com/montymi/ClearDocs/network/members
-[stars-shield]: https://img.shields.io/github/stars/montymi/ClearDocs.svg?style=for-the-badge
-[stars-url]: https://github.com/montymi/ClearDocs/stargazers
-[issues-shield]: https://img.shields.io/github/issues/montymi/ClearDocs.svg?style=for-the-badge
-[issues-url]: https://github.com/montymi/ClearDocs/issues
-[license-shield]: https://img.shields.io/github/license/montymi/ClearDocs.svg?style=for-the-badge
-[license-url]: https://github.com/montymi/ClearDocs/blob/master/LICENSE.txt
+[ghactionsLogo]: https://github.com/montymi/LazyGrocer/actions/workflows/python-app.yml/badge.svg
+[ghactionsLogo-url]: https://github.com/montymi/LazyGrocer/actions/workflows/python-app.yml
+[pythonLogo]: https://img.shields.io/badge/Python-black?style=for-the-badge&logo=python&logoColor=natural
+[pythonLogo-url]: https://python.org/
+[mysqlLogo]: https://img.shields.io/badge/MySQL-black?style=for-the-badge&logo=mysql
+[mysqlLogo-url]: https://www.mysql.com/
+[dockerLogo]: https://img.shields.io/badge/Docker-black?style=for-the-badge&logo=docker
+[dockerLogo-url]: https://www.docker.com/
+[contributors-shield]: https://img.shields.io/github/contributors/montymi/LazyGrocer.svg?style=for-the-badge
+[contributors-url]: https://github.com/montymi/LazyGrocer/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/montymi/LazyGrocer.svg?style=for-the-badge
+[forks-url]: https://github.com/montymi/LazyGrocer/network/members
+[stars-shield]: https://img.shields.io/github/stars/montymi/LazyGrocer.svg?style=for-the-badge
+[stars-url]: https://github.com/montymi/LazyGrocer/stargazers
+[issues-shield]: https://img.shields.io/github/issues/montymi/LazyGrocer.svg?style=for-the-badge
+[issues-url]: https://github.com/montymi/LazyGrocer/issues
+[license-shield]: https://img.shields.io/github/license/montymi/LazyGrocer.svg?style=for-the-badge
+[license-url]: https://github.com/montymi/LazyGrocer/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/michael-montanaro
