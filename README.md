@@ -10,11 +10,11 @@
 <!-- PROJECT LOGO -->
 <br />
 
-## 🛒 LazyGrocer
+# 🛒 LazyGrocer
 
-###  By: Michael Montanaro, Colby Hegarty, Sanay Doshi
-- Created for: CS3200 Database Design Final Project
-- [![Github Actions][ghactionsLogo]][ghactionsLogo-url]
+Created for: CS3200 Database Design Final Project
+
+[![Github Actions][ghactionsLogo]][ghactionsLogo-url]
 
 <br />
 
@@ -159,9 +159,19 @@ Distributed under the GPL License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Michael Montanaro - [LinkedIn](https://www.linkedin.com/in/michael-montanaro/) - montanaro.m@northeastern.edu
+Michael Montanaro
 
-Project Link: [https://github.com/montymi/LazyGrocer](https://github.com/montymi/LazyGrocer)
+[![LinkedIn][linkedinLogo]](https://www.linkedin.com/in/michael-montanaro/) 
+[![GitHub][githubLogo]](https://github.com/montymi)
+
+Colby Hegarty 
+
+[![LinkedIn][linkedinLogo]](https://www.linkedin.com/in/colby-hegarty-7131521b8/) 
+[![GitHub][githubLogo]](https://github.com/colbyhegarty)
+
+Sanay Doshi
+
+[![LinkedIn][linkedinLogo]](https://www.linkedin.com/in/sanay-doshi-352350200/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -171,6 +181,7 @@ Project Link: [https://github.com/montymi/LazyGrocer](https://github.com/montymi
 
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Pages](https://pages.github.com)
+* [CS3200](https://www.khoury.northeastern.edu/home/kathleen/)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -178,6 +189,8 @@ Project Link: [https://github.com/montymi/LazyGrocer](https://github.com/montymi
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[linkedinLogo]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin
+[githubLogo]: https://img.shields.io/badge/-GitHub-black.svg?style=for-the-badge&logo=github
 [ghactionsLogo]: https://github.com/montymi/LazyGrocer/actions/workflows/python-app.yml/badge.svg
 [ghactionsLogo-url]: https://github.com/montymi/LazyGrocer/actions/workflows/python-app.yml
 [pythonLogo]: https://img.shields.io/badge/Python-black?style=for-the-badge&logo=python&logoColor=natural
