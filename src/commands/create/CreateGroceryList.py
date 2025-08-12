@@ -1,4 +1,4 @@
-from commands import Command
+from commands.Command import Command
 
 class CreateGroceryListCommand(Command):
     def __init__(self, grocery_list_title, description, dc):
@@ -7,4 +7,4 @@ class CreateGroceryListCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.createGrocerylist(self.grocery_list_title, self.description))
+        print(self.dc.procedure('add_grocery_list', (self.grocery_list_title, self.description)))

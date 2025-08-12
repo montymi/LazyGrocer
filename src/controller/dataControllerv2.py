@@ -1,15 +1,10 @@
 from mysql.connector import connect, Error
-import getpass
 import logging
 import time
 
-from model.enums.scripts import InsertScripts, SelectScripts
-from model.enums.tables import Tables
-
-PASS = 'agent002!'
-USER = 'root'
-HOST = 'localhost'
-DB = 'lazygrocer'
+from src.config import DB, HOST, USER, PASS
+from src.model.enums.scripts import InsertScripts, SelectScripts
+from src.model.enums.tables import Tables
 
 class DataController2:
     def __init__(self, database=DB, host=HOST, user=USER, password=PASS):
@@ -19,7 +14,6 @@ class DataController2:
         self.database = database
         self.connection = None 
         self.cursor  = None
-        self._init_database_()
     
     def clean(self):
         if not self._is_connected_():
@@ -90,6 +84,7 @@ class DataController2:
                     self.cursor.execute(query.script, params)
                 else:
                     self.cursor.execute(query.script)
+                self.connection.commit()
                 return self.cursor.fetchall()
             except Error as e:
                 logging.error("Error fetching data: %s", e)
@@ -108,6 +103,28 @@ class DataController2:
                 logging.debug("%s executed successfully", script)
             except Error as e:
                 logging.error("Error executing %s: %s", script, e)
+
+    def procedure(self, procedure_name, args=None):
+        if not self._is_connected_():
+            logging.debug("No active connection")
+            return None
+        else:
+            try:
+                if args is None:
+                    self.cursor.callproc(procedure_name)
+                else:
+                    self.cursor.callproc(procedure_name, args)
+                # Fetch output parameters
+                results = []
+                for result in self.cursor.stored_results():
+                    results.append(result.fetchall())
+
+                self.connection.commit()  # Commit changes (if any)
+                logging.debug("Procedure %s called successfully", procedure_name)
+                return results
+            except Error as e:
+                logging.error("Error executing procedure %s: %s", procedure_name, e)
+                return None
 
     def _get_tables_(self):
         if not self._is_connected_():

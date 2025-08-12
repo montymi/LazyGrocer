@@ -1,4 +1,4 @@
-from commands import Command
+from commands.Command import Command
 
 class ReadGroceryListCommand(Command):
     def __init__(self, grocery_list_title, dc):
@@ -6,4 +6,4 @@ class ReadGroceryListCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.getGroceryList(self.grocery_list_title))
+        print(self.dc.procedure('read_all_grocery_lists', (self.grocery_list_title, )))

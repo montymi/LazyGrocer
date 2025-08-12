@@ -1,4 +1,4 @@
-from commands import Command
+from commands.Command import Command
 
 class ReadIngredientCommand(Command):
     def __init__(self, ingredient_title, dc):
@@ -6,4 +6,4 @@ class ReadIngredientCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.getIngredient(self.ingredient_title))
+        print(self.dc.procedure('read_ingredient', (self.ingredient_title, )))

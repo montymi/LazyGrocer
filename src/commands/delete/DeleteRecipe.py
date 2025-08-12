@@ -1,4 +1,4 @@
-from commands import Command
+from commands.Command import Command
 
 class DeleteRecipeCommand(Command):
     def __init__(self, recipe_title, dc):
@@ -6,4 +6,4 @@ class DeleteRecipeCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.deleteRecipe(self.recipe_title))
+        print(self.dc.procedure('delete_recipe', (self.recipe_title, )))

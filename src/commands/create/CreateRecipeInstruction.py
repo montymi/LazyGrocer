@@ -1,4 +1,4 @@
-from commands import Command
+from commands.Command import Command
 
 class CreateRecipeInstructionCommand(Command):
     def __init__(self, recipe_title, cook_time, prep_time, servings, calories, dc):
@@ -10,4 +10,4 @@ class CreateRecipeInstructionCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.createRecipeInstruction(self.recipe_title, self.cook_time, self.prep_time, self.servings, self.calories))
+        print(self.dc.procedure('add_recipe_instruction', (self.recipe_title, self.cook_time, self.prep_time, self.servings, self.calories)))

@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from commands import Command
+from commands.Command import Command
 
 class CreateRecipeCommand(Command):
     def __init__(self, recipe_title, description, dc):
@@ -10,4 +10,4 @@ class CreateRecipeCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.createRecipe(self.recipe_title, self.description, self.date))
+        print(self.dc.procedure('add_recipe', (self.recipe_title, self.description, self.date)))

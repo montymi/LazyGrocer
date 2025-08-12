@@ -1,4 +1,4 @@
-from commands import Command
+from commands.Command import Command
 
 class DeleteGroceryListCommand(Command):
     def __init__(self, grocery_list_title, dc):
@@ -6,4 +6,4 @@ class DeleteGroceryListCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.deleteGroceryList(self.grocery_list_title))
+        print(self.dc.procedure('delete_grocery_list', (self.grocery_list_title, )))

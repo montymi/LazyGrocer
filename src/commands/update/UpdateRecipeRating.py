@@ -1,8 +1,8 @@
 from datetime import datetime
-from commands import Command
+from commands.Command import Command
 
 class UpdateRecipeRatingCommand(Command):
-    def __init__(self, recipe_title, score, description, date, dc):
+    def __init__(self, recipe_title, score, description, dc):
         self.recipe_title = recipe_title
         self.score = score
         self.description = description
@@ -10,4 +10,4 @@ class UpdateRecipeRatingCommand(Command):
         self.dc = dc
 
     def execute(self):
-        print(self.dc.updateRecipeRating(self.recipe_title, self.score, self.description, self.date))
+        print(self.dc.procedure('update_rating', (self.recipe_title, self.score, self.description, self.date)))
