@@ -1,32 +1,34 @@
-FROM python:3.10-slim
+# Use Python 3.11 slim image
+FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+# Set working directory
+WORKDIR /app
 
-# Set working directory in the container
-WORKDIR /src
+# Install system dependencies for PostgreSQL
+RUN apt-get update && apt-get install -y \
+  gcc \
+  postgresql-client \
+  && rm -rf /var/lib/apt/lists/*
 
-# Install system dependencies for MySQL client and MySQL server
-RUN apt-get update && apt-get install -y --no-install-recommends \
-default-libmysqlclient-dev build-essential && \
-rm -rf /var/lib/apt/lists/*
-
-# Copy only requirements to leverage Docker cache
-COPY requirements.txt /src/
+# Copy requirements first for better caching
+COPY requirements.txt .
 
 # Install Python dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code to the container (only the src folder)
-COPY src/ /src/
+# Copy application code
+COPY src/ ./src/
 
-# Expose the port the app runs on (optional)
+# Create non-root user for security
+RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
+USER appuser
+
+# Expose port
 EXPOSE 8000
 
-# Define a volume for persistent data
-VOLUME /src/data
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+  CMD curl -f http://localhost:8000/health || exit 1
 
-# Start MySQL service and run the application
-CMD ["python", "./main.py"]
+# Run the application
+CMD ["python", "main.py"]
