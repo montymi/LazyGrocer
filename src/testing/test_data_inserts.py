@@ -5,7 +5,7 @@ import logging
 from controller.dataControllerv2 import DataController2 as DataController
 from model.enums.scripts import InsertScripts
 
-TESTDB = 'testgrocer'
+TESTDB = 'lazygrocer'
 
 class TestDataInserts(unittest.TestCase):
     @classmethod

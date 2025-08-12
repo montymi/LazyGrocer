@@ -5,7 +5,7 @@ import datetime
 from controller.dataControllerv2 import DataController2 as DataController
 from model.enums.scripts import SelectScripts
 
-TESTDB = 'testgrocer'
+TESTDB = 'lazygrocer'
 
 class TestDataSelects(unittest.TestCase):
     @classmethod

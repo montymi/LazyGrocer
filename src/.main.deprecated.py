@@ -28,5 +28,5 @@ if __name__ == '__main__':
     else:
         logging.basicConfig(level=logging.INFO)
 
-    db = DataController('testgrocer')
+    db = DataController('lazygrocer')
     main(db)

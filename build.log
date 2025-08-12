@@ -1,0 +1,43 @@
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [app internal] load build definition from dockerfile
+#1 transferring dockerfile: 920B done
+#1 DONE 0.0s
+
+#2 [app internal] load metadata for docker.io/library/python:3.10-slim
+#2 DONE 0.2s
+
+#3 [app internal] load .dockerignore
+#3 transferring context: 2B done
+#3 DONE 0.0s
+
+#4 [app 1/6] FROM docker.io/library/python:3.10-slim@sha256:61912260e578182d00b5e163eb4cfb13b35fb8782c98d1df9ed584cec8939097
+#4 DONE 0.0s
+
+#5 [app internal] load build context
+#5 transferring context: 7.65kB done
+#5 DONE 0.0s
+
+#6 [app 5/6] RUN pip install --no-cache-dir --upgrade pip &&     pip install --no-cache-dir -r requirements.txt
+#6 CACHED
+
+#7 [app 4/6] COPY requirements.txt /src/
+#7 CACHED
+
+#8 [app 3/6] RUN apt-get update && apt-get install -y --no-install-recommends default-libmysqlclient-dev build-essential && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [app 2/6] WORKDIR /src
+#9 CACHED
+
+#10 [app 6/6] COPY src/ /src/
+#10 CACHED
+
+#11 [app] exporting to image
+#11 exporting layers done
+#11 writing image sha256:64875579faab298182143c44f6219647aba0fbab3f2c814260866b1cee3443c3 done
+#11 naming to docker.io/library/lazygrocer-app done
+#11 DONE 0.0s
+
+#12 [app] resolving provenance for metadata file
+#12 DONE 0.0s

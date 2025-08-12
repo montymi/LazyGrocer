@@ -3,8 +3,8 @@ import logging
 import time
 
 from src.config import DB, HOST, USER, PASS
-from src.model.enums.scripts import InsertScripts, SelectScripts
-from src.model.enums.tables import Tables
+from src.models.enums.scripts import InsertScripts, SelectScripts
+from src.models.enums.tables import Tables
 
 class DataController2:
     def __init__(self, database=DB, host=HOST, user=USER, password=PASS):
@@ -17,7 +17,10 @@ class DataController2:
     
     def clean(self):
         if not self._is_connected_():
-            self.connect()           
+            try:
+                self.connect()
+            except Error as e:
+                logging.error(f"Error connecting to {self.database}:", e)
         try: 
             self.cursor.execute(f"DROP DATABASE IF EXISTS {self.database};")
             self.connection.commit()
