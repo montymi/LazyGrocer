@@ -6,6 +6,10 @@ flasgger==0.9.7.1
 flask
 watchdog
 
+# CLI and testing tools 
+click
+requests
+
 
 # Database dependencies
 SQLAlchemy==2.0.23
