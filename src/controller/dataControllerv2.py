@@ -1,21 +1,13 @@
 from mysql.connector import connect, Error
 import logging
-import os
 import time
 
-from model.enums.scripts import InsertScripts, SelectScripts
-from model.enums.tables import Tables
-
-db_config = {
-    'host': os.getenv('MYSQL_HOST', 'db'),
-    'port': int(os.getenv('MYSQL_PORT', 3306)),
-    'user': os.getenv('MYSQL_USER', 'root'),
-    'password': os.getenv('MYSQL_PASSWORD', 'lg-db-pd'),
-    'database': os.getenv('MYSQL_DATABASE', 'lazygrocer'),
-}
+from src.config import DB, HOST, USER, PASS
+from src.models.enums.scripts import InsertScripts, SelectScripts
+from src.models.enums.tables import Tables
 
 class DataController2:
-    def __init__(self, database=db_config.get("database"), host=db_config.get("host"), user=db_config.get("user"), password=db_config.get("password")):
+    def __init__(self, database=DB, host=HOST, user=USER, password=PASS):
         self.host = host
         self.user = user
         self.password = password
@@ -28,7 +20,7 @@ class DataController2:
             try:
                 self.connect()
             except Error as e:
-                logging.error(f"Error connecting to {self.database}:", e)       
+                logging.error(f"Error connecting to {self.database}:", e)
         try: 
             self.cursor.execute(f"DROP DATABASE IF EXISTS {self.database};")
             self.connection.commit()

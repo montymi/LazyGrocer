@@ -3,8 +3,12 @@
 __pycache__
 
 # virtual environment
-.lg-venv-win
-.lg-venv
+*venv*
 
 # environment variables
-.env
+env
+
+.idea
+
+demo.mov
+report.pdf

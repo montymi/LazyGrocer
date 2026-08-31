@@ -1,0 +1,63 @@
+version: "3.8"
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: recipe_postgres
+    environment:
+      POSTGRES_USER: recipe_user
+      POSTGRES_PASSWORD: recipe_password
+      POSTGRES_DB: recipe_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/models/db/migration.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U recipe_user -d recipe_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Flask API Application with hot reloading
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: recipe_api
+    environment:
+      FLASK_APP: main.py
+      FLASK_RUN_HOST: 0.0.0.0
+      FLASK_RUN_PORT: 8000
+      FLASK_ENV: development
+      FLASK_DEBUG: "true"
+      DATABASE_URL: postgresql://recipe_user:recipe_password@postgres:5432/recipe_db
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app # Mount entire project for hot reload
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: flask run --reload
+
+  # Optional: pgAdmin for database management
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: recipe_pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@example.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+      PGADMIN_CONFIG_SERVER_MODE: "False"
+      PGADMIN_CONFIG_MASTER_PASSWORD_REQUIRED: "False"
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  pgadmin_data:

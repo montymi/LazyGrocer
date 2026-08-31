@@ -1,0 +1,432 @@
+info:
+  title: Recipe Management API
+  description: API for managing recipes, ingredients, and grocery lists
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000/api/v1
+    description: Development server
+  - url: https://api.recipes.com/v1
+    description: Production server
+
+components:
+  schemas:
+    Recipe:
+      type: object
+      required:
+        - title
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        date_published:
+          type: string
+          format: date
+        is_deleted:
+          type: boolean
+          default: false
+        is_shared:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+
+    RecipeInput:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        date_published:
+          type: string
+          format: date
+        instructions:
+          $ref: "#/components/schemas/InstructionInput"
+        steps:
+          type: array
+          items:
+            $ref: "#/components/schemas/StepInput"
+        ingredients:
+          type: array
+          items:
+            $ref: "#/components/schemas/RecipeIngredientInput"
+
+    RecipeDetail:
+      allOf:
+        - $ref: "#/components/schemas/Recipe"
+        - type: object
+          properties:
+            instructions:
+              $ref: "#/components/schemas/Instruction"
+            steps:
+              type: array
+              items:
+                $ref: "#/components/schemas/Step"
+            ingredients:
+              type: array
+              items:
+                $ref: "#/components/schemas/RecipeIngredient"
+            ratings:
+              type: array
+              items:
+                $ref: "#/components/schemas/Rating"
+
+    Instruction:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        recipe_id:
+          type: integer
+        cook_time:
+          type: string
+          maxLength: 50
+        prep_time:
+          type: string
+          maxLength: 50
+        servings:
+          type: integer
+        calories:
+          type: integer
+
+    InstructionInput:
+      type: object
+      properties:
+        cook_time:
+          type: string
+          maxLength: 50
+        prep_time:
+          type: string
+          maxLength: 50
+        servings:
+          type: integer
+        calories:
+          type: integer
+
+    Step:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        recipe_id:
+          type: integer
+        step_number:
+          type: integer
+        description:
+          type: string
+
+    StepInput:
+      type: object
+      required:
+        - step_number
+        - description
+      properties:
+        step_number:
+          type: integer
+        description:
+          type: string
+
+    Ingredient:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        last_added:
+          type: string
+          format: date
+        is_deleted:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+
+    IngredientInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 50
+
+    RecipeIngredient:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        recipe_id:
+          type: integer
+        ingredient_id:
+          type: integer
+        ingredient:
+          $ref: "#/components/schemas/Ingredient"
+        quantity:
+          type: string
+          maxLength: 50
+
+    RecipeIngredientInput:
+      type: object
+      required:
+        - ingredient_name
+      properties:
+        ingredient_name:
+          type: string
+          maxLength: 50
+        quantity:
+          type: string
+          maxLength: 50
+
+    Rating:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        recipe_id:
+          type: integer
+        score:
+          type: integer
+          minimum: 1
+          maximum: 5
+        description:
+          type: string
+        date_added:
+          type: string
+          format: date
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+
+    RatingInput:
+      type: object
+      required:
+        - score
+      properties:
+        score:
+          type: integer
+          minimum: 1
+          maximum: 5
+        description:
+          type: string
+
+    Favorite:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        recipe_id:
+          type: integer
+        date_added:
+          type: string
+          format: date
+        description:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+
+    FavoriteInput:
+      type: object
+      properties:
+        description:
+          type: string
+
+    RecipeList:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        is_deleted:
+          type: boolean
+          default: false
+        is_shared:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+
+    RecipeListInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+
+    RecipeListDetail:
+      allOf:
+        - $ref: "#/components/schemas/RecipeList"
+        - type: object
+          properties:
+            recipes:
+              type: array
+              items:
+                $ref: "#/components/schemas/Recipe"
+
+    GroceryList:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+        is_deleted:
+          type: boolean
+          default: false
+        is_shared:
+          type: boolean
+          default: false
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+
+    GroceryListInput:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+
+    GroceryListDetail:
+      allOf:
+        - $ref: "#/components/schemas/GroceryList"
+        - type: object
+          properties:
+            ingredients:
+              type: array
+              items:
+                $ref: "#/components/schemas/Ingredient"
+
+    PaginatedResponse:
+      type: object
+      properties:
+        items:
+          type: array
+          items: {}
+        total:
+          type: integer
+        page:
+          type: integer
+        per_page:
+          type: integer
+        pages:
+          type: integer
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            message:
+              type: string
+            status_code:
+              type: integer
+
+  parameters:
+    PageParam:
+      name: page
+      in: query
+      description: Page number
+      schema:
+        type: integer
+        default: 1
+        minimum: 1
+
+    PerPageParam:
+      name: per_page
+      in: query
+      description: Items per page
+      schema:
+        type: integer
+        default: 20
+        minimum: 1
+        maximum: 100
+
+    SearchParam:
+      name: search
+      in: query
+      description: Search term
+      schema:
+        type: string
+
+    SortParam:
+      name: sort
+      in: query
+      description: Sort field
+      schema:
+        type: string
+        enum: [created_at, updated_at, name, title]
+
+    OrderParam:
+      name: order
+      in: query
+      description: Sort order
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: asc

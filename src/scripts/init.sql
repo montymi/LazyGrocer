@@ -6,7 +6,7 @@ use lazygrocer;
 CREATE TABLE IF NOT EXISTS Recipe (
     title VARCHAR(50) PRIMARY KEY,
     description TEXT,
-    date_published DATE 
+    date_published DATE
 );
 
 CREATE TABLE IF NOT EXISTS Rating (
@@ -16,8 +16,8 @@ CREATE TABLE IF NOT EXISTS Rating (
     date_added DATE,
     FOREIGN KEY (recipe_title)
 	REFERENCES Recipe(title)
-	ON UPDATE CASCADE 
-	ON DELETE CASCADE 
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS Favorite (
@@ -26,8 +26,8 @@ CREATE TABLE IF NOT EXISTS Favorite (
     description TEXT,
     FOREIGN KEY (recipe_title)
 	REFERENCES Recipe(title)
-	ON UPDATE CASCADE 
-	ON DELETE CASCADE 
+	ON UPDATE CASCADE
+	ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS RecipeList (
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS Steps (
 );
 
 CREATE TABLE IF NOT EXISTS Ingredient (
-    name VARCHAR(50) PRIMARY KEY, 
+    name VARCHAR(50) PRIMARY KEY,
     last_added DATE
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE IF NOT EXISTS RinRL (
 CREATE TABLE IF NOT EXISTS ILforI (
     grocery_list_name VARCHAR(50),
     ingredient_name VARCHAR(50),
-    FOREIGN KEY (grocery_list_name) 
+    FOREIGN KEY (grocery_list_name)
         REFERENCES GroceryList(name)
         ON UPDATE CASCADE
         ON DELETE CASCADE,
@@ -109,12 +109,12 @@ CREATE TABLE IF NOT EXISTS ILforI (
 );
 
 
--- Allows user to read ALL recipes 
+-- Allows user to read ALL recipes
 DELIMITER //
 
 CREATE PROCEDURE read_all_recipes()
 BEGIN
-    SELECT 
+    SELECT
         r.title AS recipe_title,
         r.description AS description,
         r.date_published AS date_published,
@@ -124,13 +124,13 @@ BEGIN
         i.prep_time AS instruction_prep_time,
         i.servings AS instruction_servings,
         i.calories AS instruction_calories
-    FROM 
+    FROM
         Recipe r
-    LEFT JOIN 
+    LEFT JOIN
         Rating rt ON r.title = rt.recipe_title
-    LEFT JOIN 
+    LEFT JOIN
         Instruction i ON r.title = i.recipe_title
-    ORDER BY 
+    ORDER BY
         r.title;
 END //
 
@@ -142,7 +142,7 @@ DELIMITER //
 
 CREATE PROCEDURE read_recipe(IN recipe_title VARCHAR(50))
 BEGIN
-    SELECT 
+    SELECT
         r.title AS recipe_title,
         r.description AS description,
         r.date_published AS date_published,
@@ -152,15 +152,15 @@ BEGIN
         i.prep_time AS instruction_prep_time,
         i.servings AS instruction_servings,
         i.calories AS instruction_calories
-    FROM 
+    FROM
         Recipe r
-    LEFT JOIN 
+    LEFT JOIN
         Rating rt ON r.title = rt.recipe_title
-    LEFT JOIN 
+    LEFT JOIN
         Instruction i ON r.title = i.recipe_title
-    WHERE 
+    WHERE
         r.title = recipe_title
-    ORDER BY 
+    ORDER BY
         r.title;
 END //
 
@@ -257,7 +257,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to retrieve all the recipes in the favorites table 
+-- Allows the user to retrieve all the recipes in the favorites table
 DELIMITER //
 
 CREATE PROCEDURE get_all_favorites()
@@ -445,7 +445,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to add an ingredient to a grocery list  
+-- Allows the user to add an ingredient to a grocery list
 DELIMITER //
 
 CREATE PROCEDURE add_ingredient_to_grocery_list(
@@ -461,13 +461,13 @@ END //
 DELIMITER ;
 
 
--- Allows the user to add ingredients to a recipe and to the ingredient table 
+-- Allows the user to add ingredients to a recipe and to the ingredient table
 DELIMITER //
 
 CREATE PROCEDURE add_ingredient_to_recipe(
     IN ingredient_name VARCHAR(50),
     IN recipe_title VARCHAR(50),
-    IN quantity VARCHAR(50), 
+    IN quantity VARCHAR(50),
     IN last_added DATE
 )
 BEGIN
@@ -506,7 +506,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to update the values in the rating table 
+-- Allows the user to update the values in the rating table
 DELIMITER //
 
 CREATE PROCEDURE update_rating(
@@ -526,7 +526,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to update the values in the instructions table 
+-- Allows the user to update the values in the instructions table
 DELIMITER //
 
 CREATE PROCEDURE update_instruction(
@@ -548,7 +548,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to update the values in the steps table 
+-- Allows the user to update the values in the steps table
 DELIMITER //
 
 CREATE PROCEDURE update_step(
@@ -582,7 +582,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to delete a recipe from the recipe table 
+-- Allows the user to delete a recipe from the recipe table
 DELIMITER //
 
 CREATE PROCEDURE delete_recipe(
@@ -608,7 +608,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to delete a recipe list from the recipe list table 
+-- Allows the user to delete a recipe list from the recipe list table
 DELIMITER //
 
 CREATE PROCEDURE delete_recipe_list(
@@ -622,7 +622,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to delete a grocery list from the grocery list table 
+-- Allows the user to delete a grocery list from the grocery list table
 DELIMITER //
 
 CREATE PROCEDURE delete_grocery_list(
@@ -636,7 +636,7 @@ END //
 DELIMITER ;
 
 
--- Allows the user to delete a recipe from the favorite table 
+-- Allows the user to delete a recipe from the favorite table
 DELIMITER //
 
 CREATE PROCEDURE delete_recipe_from_favorites(
